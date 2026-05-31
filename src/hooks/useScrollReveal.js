@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 
-export function useScrollReveal(selector = '[data-reveal]', options = {}) {
+export function useScrollReveal(selector = '[data-reveal]') {
   useEffect(() => {
-    const { threshold = 0.12, rootMargin = '0px 0px -60px 0px' } = options;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -13,11 +11,11 @@ export function useScrollReveal(selector = '[data-reveal]', options = {}) {
           }
         });
       },
-      { threshold, rootMargin }
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
     );
 
     document.querySelectorAll(selector).forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [selector, options]);
+  }, [selector]);
 }

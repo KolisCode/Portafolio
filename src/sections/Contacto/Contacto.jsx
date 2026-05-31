@@ -3,8 +3,8 @@ import './Contacto.css';
 const links = [
   {
     label: 'LinkedIn',
-    valor: 'linkedin.com/in/jhohanbustamante',
-    href: 'https://www.linkedin.com/in/jhohanbustamante',
+    valor: 'linkedin.com/in/jhohanbustamante-developer-full-stack',
+    href: 'https://www.linkedin.com/in/jhohanbustamante-developer-full-stack',
     icon: IconLinkedin,
   },
   {

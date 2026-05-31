@@ -15,7 +15,7 @@ function App() {
     <>
       <header><Navbar /></header>
       <main>
-        <section id="hero"><Hero /></section>
+        <Hero />
         <div data-reveal><Proyectos /></div>
         <div data-reveal data-delay="100"><Stack /></div>
         <div data-reveal><SobreMi /></div>

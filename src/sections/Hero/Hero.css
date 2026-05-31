@@ -1,11 +1,18 @@
-.hero {
+/* Full-viewport wrapper — position context for the scroll arrow */
+.hero-wrapper {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 0 2rem;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Max-width container */
+.hero {
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
 }
 
 /* Terminal window */
@@ -69,7 +76,6 @@
   margin-bottom: 0.6rem;
   display: flex;
   align-items: center;
-  gap: 4px;
 }
 
 .hero__cursor {
@@ -92,7 +98,6 @@
   color: var(--color-text-muted);
 }
 
-/* Below terminal */
 .hero__description {
   max-width: 520px;
   color: var(--color-text-muted);
@@ -139,14 +144,14 @@
   color: var(--color-accent);
 }
 
-/* Scroll arrow */
+/* Scroll arrow — centered in full viewport */
 .hero__scroll {
   position: absolute;
   bottom: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
   color: var(--color-text-muted);
-  opacity: 0.5;
+  opacity: 0.45;
   transition: opacity 0.2s;
   animation: bounce 2s ease-in-out infinite;
 }
