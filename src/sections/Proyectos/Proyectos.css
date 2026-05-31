@@ -55,6 +55,7 @@
 
 /* Image */
 .proyecto__imagen {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -68,13 +69,36 @@
   object-fit: cover;
   object-position: top;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 0.4s ease, filter 0.3s ease;
   filter: brightness(0.9);
+}
+
+.proyecto__imagen--clickable {
+  cursor: zoom-in;
+}
+
+.proyecto__imagen-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-accent);
+  background-color: rgba(15, 8, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .proyecto__card:hover .proyecto__imagen img {
   transform: scale(1.03);
-  filter: brightness(1);
+  filter: brightness(0.6);
+}
+
+.proyecto__card:hover .proyecto__imagen-hint {
+  opacity: 1;
 }
 
 .proyecto__imagen--placeholder {

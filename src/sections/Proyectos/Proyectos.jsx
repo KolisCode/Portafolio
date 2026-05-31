@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import './Proyectos.css';
 import { proyectos } from '../../data/proyectos.js';
+import Lightbox from '../../components/Lightbox/Lightbox.jsx';
 
 const estadoSlug = (estado) => estado.toLowerCase().replace(/\s+/g, '-');
 
 function Proyectos() {
+  const [lightbox, setLightbox] = useState(null);
+
   return (
     <section id="proyectos" className="section proyectos">
       <p className="section__label">proyectos</p>
@@ -13,11 +17,20 @@ function Proyectos() {
         {proyectos.map((p) => (
           <article key={p.id} className="proyecto__card">
 
-            <div className={`proyecto__imagen${!p.imagen ? ' proyecto__imagen--placeholder' : ''}`}>
+            <div
+              className={`proyecto__imagen${!p.imagen ? ' proyecto__imagen--placeholder' : ''}${p.imagen ? ' proyecto__imagen--clickable' : ''}`}
+              onClick={() => p.imagen && setLightbox({ src: p.imagen, alt: p.nombre })}
+              title={p.imagen ? `Ver captura de ${p.nombre}` : undefined}
+            >
               {p.imagen
                 ? <img src={p.imagen} alt={`Captura de ${p.nombre}`} />
                 : <PlaceholderIcon />
               }
+              {p.imagen && (
+                <span className="proyecto__imagen-hint">
+                  <ZoomIcon /> Ver captura
+                </span>
+              )}
             </div>
 
             <div className="proyecto__body">
@@ -55,6 +68,14 @@ function Proyectos() {
           </article>
         ))}
       </div>
+
+      {lightbox && (
+        <Lightbox
+          src={lightbox.src}
+          alt={lightbox.alt}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </section>
   );
 }
@@ -64,6 +85,15 @@ function PlaceholderIcon() {
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="3" y="3" width="18" height="18" rx="2" />
       <path d="M3 9h18M9 21V9" />
+    </svg>
+  );
+}
+
+function ZoomIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="11" cy="11" r="8" />
+      <path d="M21 21l-4.35-4.35M11 8v6M8 11h6" />
     </svg>
   );
 }

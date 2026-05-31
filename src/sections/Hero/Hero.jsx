@@ -1,10 +1,24 @@
 import './Hero.css';
+import { useTypewriter } from '../../hooks/useTypewriter.js';
+
+const PHRASES = [
+  '// full-stack developer · Colombia',
+  '// angular + nestjs + react',
+  '// disponible para proyectos',
+];
 
 function Hero() {
+  const typed = useTypewriter(PHRASES);
+
   return (
     <section id="hero" className="hero-wrapper">
       <div className="hero">
         <div className="hero__content">
+
+          <div className="hero__available">
+            <span className="hero__available-dot" />
+            Disponible para proyectos
+          </div>
 
           <div className="hero__terminal">
             <div className="hero__terminal-bar">
@@ -18,7 +32,9 @@ function Hero() {
                 <span className="hero__prompt-symbol">$</span> whoami
               </p>
               <h1 className="hero__name">KolisCode<span className="hero__cursor" /></h1>
-              <p className="hero__comment">// full-stack developer · Colombia</p>
+              <p className="hero__comment">
+                {typed}<span className="hero__typed-cursor">|</span>
+              </p>
             </div>
           </div>
 
