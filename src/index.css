@@ -7,13 +7,18 @@
 }
 
 :root {
-  --color-bg: #f9f9f9;
-  --color-surface: #ffffff;
-  --color-text: #1a1a2e;
-  --color-text-muted: #6b7280;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
+  --color-bg: #0f0800;
+  --color-surface: #1a0c00;
+  --color-surface-2: #231400;
+  --color-text: #ffedd5;
+  --color-text-muted: #9a7a5a;
+  --color-accent: #fbbf24;
+  --color-accent-hover: #f59e0b;
+  --color-accent-dim: rgba(251, 191, 36, 0.12);
+  --color-accent-2: #b45309;
+  --color-border: rgba(251, 191, 36, 0.1);
   --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   --radius: 8px;
   --max-width: 1100px;
 }
@@ -27,4 +32,12 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+  background-image:
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+main {
+  padding-top: 64px;
 }

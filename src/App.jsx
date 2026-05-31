@@ -1,6 +1,7 @@
 import './App.css'
 import Navbar from './components/Navbar/Navbar.jsx'
 import Hero from './sections/Hero/Hero.jsx'
+import Proyectos from './sections/Proyectos/Proyectos.jsx'
 
 function App() {
   return (
@@ -8,13 +9,11 @@ function App() {
       <header><Navbar /></header>
       <main>
         <section id="hero"><Hero /></section>
-        <section id="proyectos">Proyectos</section>
-        <section id="stack">Stack</section>
-        <section id="sobre-mi">Sobre mí</section>
-        <section id="contacto">Contacto</section>
+        <Proyectos />
+        <section id="stack" className="section">Stack</section>
+        <section id="sobre-mi" className="section">Sobre mí</section>
+        <section id="contacto" className="section">Contacto</section>
       </main>
-      <footer>Footer</footer>
-
     </>
   )
 }

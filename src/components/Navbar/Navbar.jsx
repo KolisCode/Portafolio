@@ -1,17 +1,20 @@
 import './Navbar.css'
+import markSvg from '../../assets/mark.svg'
 
 function Navbar() {
   return (
     <nav className='navbar'>
-      <span className='navbar__logo'>Jhohan</span>
+      <a href="#hero" className='navbar__brand'>
+        <img src={markSvg} alt="KolisCode mark" className='navbar__mark' />
+        <span className='navbar__name'>KolisCode</span>
+      </a>
 
-        <ul>
-          <li><a href="#hero">Inicio</a></li>
-          <li><a href="#proyectos">Proyectos</a></li>
-          <li><a href="#stack">Stack</a></li>
-          <li><a href="#sobre-mi">Sobre mí</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
+      <ul className='navbar__links'>
+        <li><a href="#proyectos">proyectos</a></li>
+        <li><a href="#stack">stack</a></li>
+        <li><a href="#sobre-mi">sobre mí</a></li>
+        <li><a href="#contacto">contacto</a></li>
+      </ul>
     </nav>
   )
 }
