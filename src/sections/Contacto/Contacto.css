@@ -1,0 +1,115 @@
+.contacto__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.contacto__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contacto__texto p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 440px;
+}
+
+.contacto__prompt {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.contacto__symbol {
+  color: var(--color-accent);
+}
+
+/* Link list */
+.contacto__lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contacto__link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.contacto__link:hover {
+  border-color: rgba(251, 191, 36, 0.3);
+  transform: translateX(4px);
+}
+
+.contacto__link:hover .contacto__link-icon {
+  color: var(--color-accent);
+}
+
+.contacto__link:hover .contacto__link-arrow {
+  color: var(--color-accent);
+  transform: translateX(4px);
+}
+
+.contacto__link-icon {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.contacto__link-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.contacto__link-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+}
+
+.contacto__link-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.contacto__link-valor {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.contacto__link-arrow {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  transition: color 0.2s, transform 0.2s;
+}
+
+@media (max-width: 768px) {
+  .contacto__layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}

@@ -1,0 +1,111 @@
+.sobre-mi__layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Bio text */
+.sobre-mi__bio {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sobre-mi__bio p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.sobre-mi__marca {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Right panel */
+.sobre-mi__panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.sobre-mi__terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1rem;
+  background-color: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sobre-mi__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+}
+
+.sobre-mi__terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sobre-mi__json {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+  padding: 1.25rem 1.5rem;
+  margin: 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* Stats */
+.sobre-mi__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--color-border);
+}
+
+.sobre-mi__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 1rem 0.5rem;
+  border-right: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.sobre-mi__stat:last-child {
+  border-right: none;
+}
+
+.sobre-mi__stat-valor {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.sobre-mi__stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  .sobre-mi__layout {
+    grid-template-columns: 1fr;
+  }
+}
