@@ -21,7 +21,7 @@ function Carrusel({ imagenes, nombre, onOpen }) {
   };
 
   return (
-    <div className="carrusel" onClick={() => onOpen(imagenes[idx], nombre)}>
+    <div className="carrusel" onClick={() => onOpen(imagenes, idx, nombre)}>
 
       <div className="carrusel__viewport">
         <div

@@ -7,7 +7,7 @@ import Carrusel from '../../components/Carrusel/Carrusel.jsx';
 const estadoSlug = (estado) => estado.toLowerCase().replace(/\s+/g, '-');
 
 function Proyectos() {
-  const [lightbox, setLightbox] = useState(null);
+  const [lightbox, setLightbox] = useState(null); // { imagenes, idx, alt }
 
   return (
     <section id="proyectos" className="section proyectos">
@@ -22,7 +22,7 @@ function Proyectos() {
               <Carrusel
                 imagenes={p.imagenes}
                 nombre={p.nombre}
-                onOpen={(src, alt) => setLightbox({ src, alt })}
+                onOpen={(imgs, idx, alt) => setLightbox({ imagenes: imgs, initialIdx: idx, alt })}
               />
             ) : (
               <div className="proyecto__imagen proyecto__imagen--placeholder">
@@ -68,7 +68,8 @@ function Proyectos() {
 
       {lightbox && (
         <Lightbox
-          src={lightbox.src}
+          imagenes={lightbox.imagenes}
+          initialIdx={lightbox.initialIdx}
           alt={lightbox.alt}
           onClose={() => setLightbox(null)}
         />
