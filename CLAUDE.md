@@ -88,10 +88,14 @@ Para agregar un proyecto nuevo:
 
 ## Componentes clave
 
-**Carrusel** — slide con CSS transform. Props: `imagenes[]`, `nombre`, `onOpen(src, alt)`.
+**Carrusel** — slide con CSS transform. Props: `imagenes[]`, `nombre`, `onOpen(imagenes, idx, nombre)`.
+Al hacer click llama `onOpen` con el array completo + índice actual para que el Lightbox arranque en la imagen correcta.
 
-**Lightbox** — usa `createPortal(…, document.body)` para escapar del árbol de transforms
-(los `[data-reveal]` tienen `transform` que rompería `position:fixed` sin portal).
+**Lightbox** — Props: `imagenes[]`, `initialIdx`, `alt`, `onClose`.
+- Usa `createPortal(…, document.body)` — CRÍTICO: sin esto, `position:fixed` queda roto porque los `[data-reveal]` tienen CSS `transform` que crea un nuevo containing block.
+- Navegación interna: flechas `‹ ›` clickeables, teclado `←` `→` para pasar, `Esc` para cerrar.
+- Dots en la parte inferior + counter `n / total` en la barra superior.
+- Cada cambio de imagen hace fade-in con `key={idx}` en el `<img>`.
 
 **useTypewriter** — maneja estado con `useRef` para evitar re-renders. Frases en `Hero.jsx`.
 
