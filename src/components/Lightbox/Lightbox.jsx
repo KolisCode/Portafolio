@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import './Lightbox.css';
 
 function Lightbox({ src, alt, onClose }) {
@@ -12,7 +13,7 @@ function Lightbox({ src, alt, onClose }) {
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div className="lightbox" onClick={onClose} role="dialog" aria-modal="true">
       <button className="lightbox__close" onClick={onClose} aria-label="Cerrar">✕</button>
       <div className="lightbox__frame" onClick={(e) => e.stopPropagation()}>
@@ -24,7 +25,8 @@ function Lightbox({ src, alt, onClose }) {
         </div>
         <img src={src} alt={alt} className="lightbox__img" />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
