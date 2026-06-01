@@ -1,6 +1,7 @@
 # Portafolio personal — KolisCode / Jhohan Bustamante
 
 Portfolio personal como desarrollador freelance. Vite 8 + React 19 + JSX.
+Live en: **https://jhohanbustamante.kolisevm.online**
 
 **Instrucción:** Mantén este archivo actualizado de forma proactiva.
 
@@ -36,64 +37,91 @@ src/
 ├── App.jsx                        ← layout raíz: Navbar + secciones + Footer
 ├── main.jsx
 ├── App.css                        ← utilidades de sección (.section, .section__label)
-├── index.css                      ← variables CSS, reset, grid body, scroll-reveal
+├── index.css                      ← variables CSS, reset, grid body, scroll-reveal classes
 ├── assets/
 │   ├── mark.svg                   ← logo KolisCode (también en /public/favicon.svg)
 │   └── proyectos/
-│       ├── lotesrb.png
-│       └── biodont.png
+│       ├── tiendakit-{1-4}.png    ← capturas TiendaKit
+│       ├── lotesrb-{1-4}.png      ← capturas LotesRB
+│       └── biodont-{1-4}.png      ← capturas Biodont
 ├── components/
 │   ├── Navbar/                    ← logo + links desktop + hamburger mobile + active section
-│   └── Footer/                    ← marca + copyright + íconos sociales
+│   ├── Footer/                    ← marca + copyright + íconos sociales
+│   ├── Carrusel/                  ← carrusel de imágenes: slide, dots, flechas, counter
+│   └── Lightbox/                  ← overlay fullscreen con portal (createPortal → document.body)
 ├── hooks/
-│   ├── useScrollReveal.js         ← IntersectionObserver para animaciones fade-in
-│   └── useActiveSection.js        ← detecta sección visible → ilumina nav link
+│   ├── useScrollReveal.js         ← IntersectionObserver fade-in al entrar al viewport
+│   ├── useActiveSection.js        ← detecta sección visible → ilumina nav link activo
+│   └── useTypewriter.js           ← efecto typewriter que rota frases en el Hero
 ├── sections/
-│   ├── Hero/                      ← terminal macOS, cursor parpadeante, CTA, scroll arrow
-│   ├── Proyectos/                 ← cards con screenshot, badge estado, tech chips, links
-│   ├── Stack/                     ← 4 columnas por categoría con SVG icons
-│   ├── SobreMi/                   ← bio + koliscode.json + stats
+│   ├── Hero/                      ← terminal macOS, badge disponible, typewriter, scroll arrow
+│   ├── Proyectos/                 ← grid de cards con Carrusel + Lightbox
+│   ├── Stack/                     ← 4 columnas por categoría con íconos SVG inline
+│   ├── SobreMi/                   ← bio + koliscode.json + stats (3+ años, 5+ proyectos)
 │   └── Contacto/                  ← LinkedIn, GitHub, Email, WhatsApp
 └── data/
-    └── proyectos.js               ← fuente de verdad de proyectos (importa imágenes)
+    └── proyectos.js               ← fuente de verdad: imports de imágenes + metadata
 ```
 
 ## Secciones
 
 | ID | Componente | Estado |
 |---|---|---|
-| `#hero` | Hero | ✅ Completo |
-| `#proyectos` | Proyectos | ✅ 3 proyectos (TiendaKit, LotesRB, Biodont) |
+| `#hero` | Hero | ✅ Terminal, badge verde, typewriter 3 frases, scroll arrow |
+| `#proyectos` | Proyectos | ✅ 3 proyectos con carrusel 4 imágenes + lightbox |
 | `#stack` | Stack | ✅ 14 tecnologías con íconos SVG |
-| `#sobre-mi` | SobreMi | ✅ Completo |
+| `#sobre-mi` | SobreMi | ✅ Bio + JSON panel + stats |
 | `#contacto` | Contacto | ✅ LinkedIn, GitHub, Email, WhatsApp |
 
 ## Proyectos en data/proyectos.js
 
-Agregar proyectos nuevos ahí. Campos:
-- `id`, `nombre`, `descripcion`, `stack[]`, `estado` (`'Lanzado'` | `'En desarrollo'`)
-- `imagen` — importar desde `../assets/proyectos/nombre.png` (o `null` para placeholder)
-- `github`, `demo` — URLs o `''`
+Campos por proyecto:
+- `id`, `nombre`, `descripcion`, `stack[]`
+- `estado`: `'Lanzado'` | `'En desarrollo'`
+- `imagenes`: array de imports desde `../assets/proyectos/` (vacío → muestra placeholder)
+- `github`, `demo`: URLs o `''`
+
+Para agregar un proyecto nuevo:
+1. Copiar capturas a `src/assets/proyectos/nombre-{1-4}.png`
+2. Importar en `proyectos.js`
+3. Agregar objeto al array
+
+## Componentes clave
+
+**Carrusel** — slide con CSS transform. Props: `imagenes[]`, `nombre`, `onOpen(src, alt)`.
+
+**Lightbox** — usa `createPortal(…, document.body)` para escapar del árbol de transforms
+(los `[data-reveal]` tienen `transform` que rompería `position:fixed` sin portal).
+
+**useTypewriter** — maneja estado con `useRef` para evitar re-renders. Frases en `Hero.jsx`.
 
 ## Comandos
 
 ```bash
 npm run dev       # → http://localhost:5173
-npm run build     # dist/ (verificar antes de deploy)
+npm run build     # dist/ — verificar antes de deploy
 npm run preview   # sirve dist/ localmente
 ```
 
 ## Deploy
 
-Clave registrada en droplet MCP: `portafolio` → `/var/www/portafolio` (nginx estático).
+```bash
+# 1. Build
+npm run build
 
+# 2. Deploy via MCP droplet
+mcp__droplet__deploy_static({
+  local_path: '/Users/Jhohan/Documents/portafolio/dist/',
+  remote_path: '/var/www/portafolio'
+})
 ```
-mcp__droplet__deploy_static({ key: 'portafolio' })
-```
+
+Nginx config en droplet: `/etc/nginx/sites-enabled/portafolio`
+Dominio: `jhohanbustamante.kolisevm.online` con SSL Certbot.
 
 ## Pendientes
 
 - Migrar a TypeScript
-- og:image con URL absoluta tras definir dominio final
-- Más proyectos: Nordik, Coreframe (cuando estén listos)
-- Screenshots reales de TiendaKit cuando avance el proyecto
+- og:image necesita URL absoluta (actualmente es `/og-image.png`, relativa)
+- Más proyectos: Nordik, Coreframe cuando tengan capturas listas
+- Evaluar cambiar TiendaKit a "Lanzado" y agregar link a demo/repo
