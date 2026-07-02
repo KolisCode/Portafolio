@@ -1,7 +1,7 @@
 # Portafolio personal — KolisCode / Jhohan Bustamante
 
 Portfolio personal como desarrollador freelance. Vite 8 + React 19 + JSX.
-Live en: **https://jhohanbustamante.kolisevm.online**
+Live en: **https://koliscode.com**
 
 **Instrucción:** Mantén este archivo actualizado de forma proactiva.
 
@@ -43,7 +43,8 @@ src/
 │   └── proyectos/
 │       ├── tiendakit-{1-4}.png    ← capturas TiendaKit
 │       ├── lotesrb-{1-4}.png      ← capturas LotesRB
-│       └── biodont-{1-4}.png      ← capturas Biodont
+│       ├── biodont-{1-4}.png      ← capturas Biodont
+│       └── koliskit-{1-4}.png     ← capturas KolisKit (tomadas con Playwright de la landing live)
 ├── components/
 │   ├── Navbar/                    ← logo + links desktop + hamburger mobile + active section
 │   ├── Footer/                    ← marca + copyright + íconos sociales
@@ -68,7 +69,7 @@ src/
 | ID | Componente | Estado |
 |---|---|---|
 | `#hero` | Hero | ✅ Terminal, badge verde, typewriter 3 frases, scroll arrow |
-| `#proyectos` | Proyectos | ✅ 3 proyectos con carrusel 4 imágenes + lightbox |
+| `#proyectos` | Proyectos | ✅ 4 proyectos con carrusel 4 imágenes + lightbox (KolisKit primero) |
 | `#stack` | Stack | ✅ 14 tecnologías con íconos SVG |
 | `#sobre-mi` | SobreMi | ✅ Bio + JSON panel + stats |
 | `#contacto` | Contacto | ✅ LinkedIn, GitHub, Email, WhatsApp |
@@ -121,11 +122,16 @@ mcp__droplet__deploy_static({
 ```
 
 Nginx config en droplet: `/etc/nginx/sites-enabled/portafolio`
-Dominio: `jhohanbustamante.kolisevm.online` con SSL Certbot.
+Dominio: `koliscode.com` con SSL Certbot.
 
 ## Pendientes
 
+- **Deployar KolisKit al droplet** — la card ya está en local (build OK), falta `deploy_static`
+- **Decidir dominio propio** — recomendación: `koliscode.com` (o `.dev`) y migrar con 301 desde
+  `koliscode.com`; el `.online` resta confianza y no coincide con la marca
 - Migrar a TypeScript
-- og:image necesita URL absoluta (actualmente es `/og-image.png`, relativa)
+- og:image necesita URL absoluta (actualmente es `/og-image.png`, relativa) — definirla con el dominio final
 - Más proyectos: Nordik, Coreframe cuando tengan capturas listas
 - Evaluar cambiar TiendaKit a "Lanzado" y agregar link a demo/repo
+- KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado (la landing live también
+  linkea ese repo y da 404 a visitantes — corregir en el proyecto KolisKit)

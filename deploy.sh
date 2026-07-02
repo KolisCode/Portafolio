@@ -3,7 +3,7 @@ set -euo pipefail
 
 REMOTE_HOST="droplet"
 REMOTE_PATH="/var/www/portafolio"
-DOMAIN="jhohanbustamante.kolisevm.online"
+DOMAIN="koliscode.com"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }

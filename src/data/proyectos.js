@@ -13,7 +13,22 @@ import biodont2 from '../assets/proyectos/biodont-2.png'
 import biodont3 from '../assets/proyectos/biodont-3.png'
 import biodont4 from '../assets/proyectos/biodont-4.png'
 
+import koliskit1 from '../assets/proyectos/koliskit-1.png'
+import koliskit2 from '../assets/proyectos/koliskit-2.png'
+import koliskit3 from '../assets/proyectos/koliskit-3.png'
+import koliskit4 from '../assets/proyectos/koliskit-4.png'
+
 export const proyectos = [
+    {
+        id: 4,
+        nombre: 'KolisKit',
+        descripcion: 'Toolbox de utilidades en línea: acortador de enlaces con analytics, códigos QR, contraseñas seguras, conversor de monedas y unidades. Landing pública + API REST con API keys, rate limiting por plan y documentación OpenAPI.',
+        stack: ['NestJS', 'Prisma', 'PostgreSQL', 'Tailwind', 'Scalar'],
+        estado: 'Lanzado',
+        imagenes: [koliskit1, koliskit2, koliskit3, koliskit4],
+        github: '',
+        demo: 'https://api.koliscode.com',
+    },
     {
         id: 1,
         nombre: 'TiendaKit',
@@ -32,7 +47,7 @@ export const proyectos = [
         estado: 'Lanzado',
         imagenes: [lotesrb1, lotesrb2, lotesrb3, lotesrb4],
         github: 'https://github.com/KolisCode/lotesRB',
-        demo: 'https://lotesrb.kolisevm.online',
+        demo: 'https://lotesrb.koliscode.com',
     },
     {
         id: 3,
