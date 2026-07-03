@@ -18,6 +18,11 @@ import koliskit2 from '../assets/proyectos/koliskit-2.png'
 import koliskit3 from '../assets/proyectos/koliskit-3.png'
 import koliskit4 from '../assets/proyectos/koliskit-4.png'
 
+import coreframe1 from '../assets/proyectos/coreframe-1.png'
+import coreframe2 from '../assets/proyectos/coreframe-2.png'
+import coreframe3 from '../assets/proyectos/coreframe-3.png'
+import coreframe4 from '../assets/proyectos/coreframe-4.png'
+
 export const proyectos = [
     {
         id: 4,
@@ -34,10 +39,10 @@ export const proyectos = [
         nombre: 'TiendaKit',
         descripcion: 'Tienda en línea genérica con catálogo, carrito y checkout real con MercadoPago. Panel admin para gestionar inventario, productos y órdenes.',
         stack: ['Next.js', 'NestJS', 'PostgreSQL', 'Prisma', 'MercadoPago'],
-        estado: 'En desarrollo',
+        estado: 'Lanzado',
         imagenes: [tiendakit1, tiendakit2, tiendakit3, tiendakit4],
         github: '',
-        demo: '',
+        demo: 'https://tiendakit.koliscode.com',
     },
     {
         id: 2,
@@ -58,5 +63,15 @@ export const proyectos = [
         imagenes: [biodont1, biodont2, biodont3, biodont4],
         github: 'https://github.com/KolisCode/Biodont',
         demo: '',
+    },
+    {
+        id: 5,
+        nombre: 'CoreFrame',
+        descripcion: 'Sitio del estudio de desarrollo CoreFrame: presentación del equipo, portafolio de proyectos con carrusel y formulario de contacto directo. Renderizado en servidor con Next.js.',
+        stack: ['Next.js', 'React', 'TypeScript', 'Tailwind'],
+        estado: 'Lanzado',
+        imagenes: [coreframe1, coreframe2, coreframe3, coreframe4],
+        github: '',
+        demo: 'https://coreframe.koliscode.com',
     },
 ]
