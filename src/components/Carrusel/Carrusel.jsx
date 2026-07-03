@@ -35,6 +35,8 @@ function Carrusel({ imagenes, nombre, onOpen }) {
               alt={`${nombre} — vista ${i + 1}`}
               className="carrusel__img"
               draggable={false}
+              loading="lazy"
+              decoding="async"
             />
           ))}
         </div>

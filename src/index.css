@@ -66,3 +66,8 @@ main {
 [data-reveal][data-delay='200'] { transition-delay: 0.2s; }
 [data-reveal][data-delay='300'] { transition-delay: 0.3s; }
 [data-reveal][data-delay='400'] { transition-delay: 0.4s; }
+
+:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
