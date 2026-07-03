@@ -40,11 +40,13 @@ src/
 ├── index.css                      ← variables CSS, reset, grid body, scroll-reveal classes
 ├── assets/
 │   ├── mark.svg                   ← logo KolisCode (también en /public/favicon.svg)
-│   └── proyectos/
-│       ├── tiendakit-{1-4}.png    ← capturas TiendaKit
-│       ├── lotesrb-{1-4}.png      ← capturas LotesRB
-│       ├── biodont-{1-4}.png      ← capturas Biodont
-│       └── koliskit-{1-4}.png     ← capturas KolisKit (tomadas con Playwright de la landing live)
+│   └── proyectos/                 ← TODAS las capturas en WebP q82 (convención: nombre-{1-4}.webp)
+│       ├── tiendakit-{1-4}.webp
+│       ├── lotesrb-{1-4}.webp
+│       ├── biodont-{1-4}.webp
+│       ├── koliskit-{1-4}.webp    ← ⚠️ muestran la landing vieja (kolisevm) — recapturar tras
+│       │                             el próximo deploy de KolisKit con las tools nuevas
+│       └── coreframe-{1-4}.webp   ← tomadas con Playwright de coreframe.koliscode.com (1440×900)
 ├── components/
 │   ├── Navbar/                    ← logo + links desktop + hamburger mobile + active section
 │   ├── Footer/                    ← marca + copyright + íconos sociales
@@ -69,7 +71,7 @@ src/
 | ID | Componente | Estado |
 |---|---|---|
 | `#hero` | Hero | ✅ Terminal, badge verde, typewriter 3 frases, scroll arrow |
-| `#proyectos` | Proyectos | ✅ 4 proyectos con carrusel 4 imágenes + lightbox (KolisKit primero) |
+| `#proyectos` | Proyectos | ✅ 5 proyectos con carrusel 4 imágenes + lightbox (KolisKit primero, CoreFrame último) |
 | `#stack` | Stack | ✅ 14 tecnologías con íconos SVG |
 | `#sobre-mi` | SobreMi | ✅ Bio + JSON panel + stats |
 | `#contacto` | Contacto | ✅ LinkedIn, GitHub, Email, WhatsApp |
@@ -126,12 +128,19 @@ Dominio: `koliscode.com` con SSL Certbot.
 
 ## Pendientes
 
-- **Deployar KolisKit al droplet** — la card ya está en local (build OK), falta `deploy_static`
-- **Decidir dominio propio** — recomendación: `koliscode.com` (o `.dev`) y migrar con 301 desde
-  `koliscode.com`; el `.online` resta confianza y no coincide con la marca
+- Recapturar `koliskit-{1-4}.webp` (muestran el dominio viejo kolisevm en la UI) tras el
+  próximo deploy de KolisKit con las tools nuevas
+- Más proyectos candidatos: Nordik, MetriBoard, GeoAgent — pendiente decisión + capturas
+  (sin deploy público: levantar local o placeholder de marca)
+- Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
 - Migrar a TypeScript
-- og:image necesita URL absoluta (actualmente es `/og-image.png`, relativa) — definirla con el dominio final
-- Más proyectos: Nordik, Coreframe cuando tengan capturas listas
-- Evaluar cambiar TiendaKit a "Lanzado" y agregar link a demo/repo
-- KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado (la landing live también
-  linkea ese repo y da 404 a visitantes — corregir en el proyecto KolisKit)
+- Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
+- KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado
+
+### Hecho 2026-07-02 (sesión orquestada)
+- SEO: og/twitter image absolutas + og:url + canonical + theme-color + JSON-LD Person;
+  robots.txt + sitemap.xml; verificación Search Console movida a `public/`
+- Imágenes PNG→WebP q82 (3.8 MB → 652 KB) + lazy loading en carrusel
+- `prefers-reduced-motion` (CSS global + typewriter congelado) y `:focus-visible` ámbar
+- CoreFrame añadido (capturas Playwright); TiendaKit → "Lanzado" con demo
+- Auditoría móvil 375/768 con Playwright: sin roturas, no hicieron falta media queries nuevas
