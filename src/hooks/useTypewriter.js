@@ -1,10 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
+
 export function useTypewriter(phrases, { typeSpeed = 55, deleteSpeed = 28, pause = 2200 } = {}) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(() => (prefersReducedMotion() ? phrases[0] : ''));
   const state = useRef({ phraseIdx: 0, charIdx: 0, deleting: false });
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      return undefined;
+    }
+
     let timer;
 
     function tick() {

@@ -71,3 +71,23 @@ main {
   outline: 2px solid #fbbf24;
   outline-offset: 2px;
 }
+
+/* Reduced motion: desactiva scroll-reveal y recorta animaciones/transiciones globales */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal='left'],
+  [data-reveal='right'] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
