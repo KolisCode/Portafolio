@@ -44,8 +44,7 @@ src/
 │       ├── tiendakit-{1-4}.webp
 │       ├── lotesrb-{1-4}.webp
 │       ├── biodont-{1-4}.webp
-│       ├── koliskit-{1-4}.webp    ← ⚠️ muestran la landing vieja (kolisevm) — recapturar tras
-│       │                             el próximo deploy de KolisKit con las tools nuevas
+│       ├── koliskit-{1-4}.webp    ← recapturadas 2026-07-02 de la landing live (tools nuevas visibles)
 │       └── coreframe-{1-4}.webp   ← tomadas con Playwright de coreframe.koliscode.com (1440×900)
 ├── components/
 │   ├── Navbar/                    ← logo + links desktop + hamburger mobile + active section
@@ -128,8 +127,6 @@ Dominio: `koliscode.com` con SSL Certbot.
 
 ## Pendientes
 
-- Recapturar `koliskit-{1-4}.webp` (muestran el dominio viejo kolisevm en la UI) tras el
-  próximo deploy de KolisKit con las tools nuevas
 - Más proyectos candidatos: Nordik, MetriBoard, GeoAgent — pendiente decisión + capturas
   (sin deploy público: levantar local o placeholder de marca)
 - Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
@@ -144,3 +141,5 @@ Dominio: `koliscode.com` con SSL Certbot.
 - `prefers-reduced-motion` (CSS global + typewriter congelado) y `:focus-visible` ámbar
 - CoreFrame añadido (capturas Playwright); TiendaKit → "Lanzado" con demo
 - Auditoría móvil 375/768 con Playwright: sin roturas, no hicieron falta media queries nuevas
+- Capturas koliskit-* recapturadas de la landing nueva y **deployado a koliscode.com**
+  (robots/sitemap/OG validados en vivo)
