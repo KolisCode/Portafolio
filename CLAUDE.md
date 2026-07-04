@@ -133,12 +133,18 @@ Campo `caso` (caso de estudio, opcional pero presente en los 8):
 `{ rol, periodo, resumen, problema, solucion, arquitectura[], decisiones[{titulo,detalle}], resultados[] }`
 La página degrada con gracia si falta cualquier bloque. Helper `getProyecto(slug)`.
 
-**Los 8:** KolisKit, TiendaKit, LotesRB, Biodont, CoreFrame, **GeoAgent** (con capturas) ·
-Metriboard, DentalSaaS (sin capturas → placeholder de marca). ⚠️ **GeoAgent es proyecto
-propio de KolisCode** — nunca atribuirlo a GeoGeeks/semillero/Esri. Sus capturas (`geoagent-1..3`)
-se tomaron del frontend local **recortando la franja superior** que muestra "GeoGeeks · Esri
-Colombia" (branding a revisar en la propia app). El modo mapa y Metriboard/DentalSaaS necesitan
-sus backends + DB con datos sembrados para capturarse bien → por eso siguen con placeholder.
+**Los 8:** KolisKit, TiendaKit, LotesRB, Biodont, CoreFrame, **GeoAgent**, **DentalSaaS**
+(con capturas) · Metriboard (placeholder de marca). ⚠️ **GeoAgent es proyecto propio de
+KolisCode** — nunca atribuirlo a GeoGeeks/semillero/Esri. Sus capturas (`geoagent-1..3`) se
+tomaron del frontend local **recortando la franja superior** que muestra "GeoGeeks · Esri
+Colombia" (branding a revisar en la propia app).
+
+**DentalSaaS** (`dentalsaas-1..3`): capturadas del frontend Angular local (marca "Raíz") tras
+`db:up` + migrate + seed (`admin@demo.dentalsaas.co` / `Demo123456!`): dashboard, odontograma FDI
+de un paciente, y lista de pacientes. Stack real confirmado: NestJS + Angular + Prisma + PostgreSQL
++ Redis. **Metriboard** sigue con placeholder: su frontend es un esqueleto (dashboard con KPIs
+hardcodeados en "—", sin fetch a la API; otras rutas 404), así que no hay UI real que capturar
+todavía aunque su API+seed sí funcionen.
 
 Para agregar un proyecto nuevo:
 1. (Opcional) capturas en `src/assets/proyectos/nombre-{1-4}.webp` + imports en `proyectos.js`
@@ -186,9 +192,9 @@ Dominio: `koliscode.com` con SSL Certbot.
 - **Revamp en curso (jul-2026):** Fase 1 hecha (router + páginas de caso de estudio + 3
   proyectos nuevos). Secciones **Servicios** ✅, **Blog/Notas** ✅ y **teaser de notas** ✅.
   **Transiciones de página** ✅ (fade en `route-fade`, `components/Layout/Layout.css`).
-  **Capturas GeoAgent** ✅ (3 reales). Orden home: Hero → Servicios → Proyectos → Stack → SobreMi →
-  NotasPreview → Contacto. Pendiente: capturas de Metriboard/DentalSaaS (requieren backend+DB con
-  seed) y migrar a TS.
+  **Capturas GeoAgent** ✅ (3) y **DentalSaaS** ✅ (3, del frontend Angular local). Orden home:
+  Hero → Servicios → Proyectos → Stack → SobreMi → NotasPreview → Contacto. Pendiente: capturas de
+  Metriboard (bloqueadas: su frontend es un esqueleto sin datos) y migrar a TS.
 - Otro proyecto candidato: Nordik — pendiente decisión + capturas (sin deploy público:
   levantar local o placeholder de marca)
 - Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
