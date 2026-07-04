@@ -2,6 +2,71 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://koliscode.com/</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-04</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Casos de estudio de proyectos -->
+  <url>
+    <loc>https://koliscode.com/proyectos/koliskit</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/proyectos/tiendakit</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/proyectos/lotesrb</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/proyectos/biodont</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/proyectos/coreframe</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/proyectos/geoagent</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/proyectos/metriboard</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/proyectos/dentalsaas</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog / Notas -->
+  <url>
+    <loc>https://koliscode.com/notas</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/notas/herramientas-mcp-vs-sql</loc>
+    <lastmod>2026-06-20</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/notas/pagos-webhook-vs-redirect</loc>
+    <lastmod>2026-06-08</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://koliscode.com/notas/multi-tenant-desde-el-esquema</loc>
+    <lastmod>2026-05-22</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>
