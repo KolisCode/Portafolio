@@ -1,28 +1,23 @@
 import './App.css'
-import { useScrollReveal } from './hooks/useScrollReveal.js'
-import Navbar from './components/Navbar/Navbar.jsx'
-import Footer from './components/Footer/Footer.jsx'
-import Hero from './sections/Hero/Hero.jsx'
-import Proyectos from './sections/Proyectos/Proyectos.jsx'
-import Stack from './sections/Stack/Stack.jsx'
-import SobreMi from './sections/SobreMi/SobreMi.jsx'
-import Contacto from './sections/Contacto/Contacto.jsx'
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/Layout/Layout.jsx'
+import Home from './pages/Home.jsx'
+import ProyectoDetalle from './pages/ProyectoDetalle.jsx'
+import Notas from './pages/Notas.jsx'
+import NotaDetalle from './pages/NotaDetalle.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 function App() {
-  useScrollReveal();
-
   return (
-    <>
-      <header><Navbar /></header>
-      <main>
-        <Hero />
-        <div data-reveal><Proyectos /></div>
-        <div data-reveal data-delay="100"><Stack /></div>
-        <div data-reveal><SobreMi /></div>
-        <div data-reveal data-delay="100"><Contacto /></div>
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="proyectos/:slug" element={<ProyectoDetalle />} />
+        <Route path="notas" element={<Notas />} />
+        <Route path="notas/:slug" element={<NotaDetalle />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   )
 }
 

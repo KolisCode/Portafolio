@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Proyectos.css';
 import { proyectos } from '../../data/proyectos.js';
 import Lightbox from '../../components/Lightbox/Lightbox.jsx';
@@ -32,7 +33,9 @@ function Proyectos() {
 
             <div className="proyecto__body">
               <div className="proyecto__card-header">
-                <h3 className="proyecto__nombre">{p.nombre}</h3>
+                <h3 className="proyecto__nombre">
+                  <Link to={`/proyectos/${p.slug}`} className="proyecto__nombre-link">{p.nombre}</Link>
+                </h3>
                 <span className={`proyecto__badge proyecto__badge--${estadoSlug(p.estado)}`}>
                   {p.estado}
                 </span>
@@ -46,20 +49,21 @@ function Proyectos() {
                 ))}
               </div>
 
-              {(p.github || p.demo) && (
-                <div className="proyecto__links">
-                  {p.github && (
-                    <a href={p.github} target="_blank" rel="noopener noreferrer" className="proyecto__link">
-                      <GithubIcon /> Código
-                    </a>
-                  )}
-                  {p.demo && (
-                    <a href={p.demo} target="_blank" rel="noopener noreferrer" className="proyecto__link">
-                      <ExternalIcon /> Demo
-                    </a>
-                  )}
-                </div>
-              )}
+              <div className="proyecto__links">
+                <Link to={`/proyectos/${p.slug}`} className="proyecto__link proyecto__link--caso">
+                  Ver caso <span aria-hidden="true">→</span>
+                </Link>
+                {p.github && (
+                  <a href={p.github} target="_blank" rel="noopener noreferrer" className="proyecto__link">
+                    <GithubIcon /> Código
+                  </a>
+                )}
+                {p.demo && (
+                  <a href={p.demo} target="_blank" rel="noopener noreferrer" className="proyecto__link">
+                    <ExternalIcon /> Demo
+                  </a>
+                )}
+              </div>
             </div>
 
           </article>

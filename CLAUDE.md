@@ -16,7 +16,15 @@ Live en: **https://koliscode.com**
 | Lenguaje | JavaScript (JSX) — sin TypeScript todavía |
 | Estilos | CSS modules por componente |
 | Fuentes | Inter (cuerpo) + JetBrains Mono (headings, código) |
+| Routing | React Router 7 (SPA: `/` · `/proyectos/:slug` · `/notas` · `/notas/:slug`) |
+| Contenido | Markdown (`marked`) para el blog — posts en `src/content/notas/*.md` |
 | Linting | ESLint 10 + react-hooks + react-refresh |
+
+> **Arquitectura (desde jul-2026):** dejó de ser one-page. Es una SPA con React Router.
+> `main.jsx` monta `<BrowserRouter>`; `App.jsx` define las `<Routes>` bajo un `Layout`
+> (Navbar + `<Outlet>` + Footer). El home vive en `pages/Home.jsx` (compone las secciones);
+> cada proyecto tiene su **página de caso de estudio** en `pages/ProyectoDetalle.jsx`.
+> ⚠️ Al desplegar en nginx hace falta fallback SPA: `try_files $uri $uri/ /index.html;`
 
 ## Paleta de marca (KolisCode)
 
@@ -34,10 +42,18 @@ Live en: **https://koliscode.com**
 
 ```
 src/
-├── App.jsx                        ← layout raíz: Navbar + secciones + Footer
-├── main.jsx
+├── App.jsx                        ← define <Routes> (Layout → Home / ProyectoDetalle / 404)
+├── main.jsx                       ← monta <BrowserRouter>
 ├── App.css                        ← utilidades de sección (.section, .section__label)
 ├── index.css                      ← variables CSS, reset, grid body, scroll-reveal classes
+├── pages/
+│   ├── Home.jsx                   ← compone las secciones del home + useScrollReveal
+│   ├── ProyectoDetalle.jsx (.css) ← caso de estudio por proyecto (/proyectos/:slug)
+│   ├── Notas.jsx (.css)           ← índice del blog (/notas)
+│   ├── NotaDetalle.jsx (.css)     ← nota individual (/notas/:slug); .prose renderiza el MD
+│   └── NotFound.jsx               ← 404
+├── content/
+│   └── notas/*.md                 ← posts del blog (frontmatter + Markdown); ver data/notas.js
 ├── assets/
 │   ├── mark.svg                   ← logo KolisCode (también en /public/favicon.svg)
 │   └── proyectos/                 ← TODAS las capturas en WebP q82 (convención: nombre-{1-4}.webp)
@@ -48,7 +64,8 @@ src/
 │       │                             el próximo deploy de KolisKit con las tools nuevas
 │       └── coreframe-{1-4}.webp   ← tomadas con Playwright de coreframe.koliscode.com (1440×900)
 ├── components/
-│   ├── Navbar/                    ← logo + links desktop + hamburger mobile + active section
+│   ├── Layout/                    ← shell: Navbar + <Outlet> + Footer + scroll-a-hash/tope por ruta
+│   ├── Navbar/                    ← route-aware: links van a `/#seccion`; active section solo en home
 │   ├── Footer/                    ← marca + copyright + íconos sociales
 │   ├── Carrusel/                  ← carrusel de imágenes: slide, dots, flechas, counter
 │   └── Lightbox/                  ← overlay fullscreen con portal (createPortal → document.body)
@@ -58,36 +75,75 @@ src/
 │   └── useTypewriter.js           ← efecto typewriter que rota frases en el Hero
 ├── sections/
 │   ├── Hero/                      ← terminal macOS, badge disponible, typewriter, scroll arrow
+│   ├── Servicios/                 ← 6 cards de oferta; cada una enlaza a un proyecto de ejemplo
 │   ├── Proyectos/                 ← grid de cards con Carrusel + Lightbox
 │   ├── Stack/                     ← 4 columnas por categoría con íconos SVG inline
 │   ├── SobreMi/                   ← bio + koliscode.json + stats (3+ años, 5+ proyectos)
+│   ├── NotasPreview/              ← teaser "Del blog": 2 notas recientes + "Ver todas →" a /notas
 │   └── Contacto/                  ← LinkedIn, GitHub, Email, WhatsApp
 └── data/
-    └── proyectos.js               ← fuente de verdad: imports de imágenes + metadata
+    ├── proyectos.js               ← fuente de verdad: imports de imágenes + metadata + caso de estudio
+    └── notas.js                   ← carga los .md (import.meta.glob ?raw), parsea frontmatter, ordena por fecha
 ```
+
+## Blog / Notas (`/notas`)
+
+Posts en `src/content/notas/*.md`. **Publicar una nota = crear un `.md`** con frontmatter:
+
+```markdown
+---
+title: Título de la nota
+date: 2026-06-20            # YYYY-MM-DD (se formatea como fecha local, sin desfase UTC)
+description: Resumen de una línea (índice + SEO).
+tags: MCP, arquitectura, IA # lista separada por comas
+---
+Cuerpo en Markdown…
+```
+
+`data/notas.js` los carga en build (`import.meta.glob` con `?raw`), parsea el frontmatter,
+calcula el tiempo de lectura, ordena por fecha desc y renderiza con `marked`. El slug sale del
+nombre del archivo. El HTML va por `dangerouslySetInnerHTML` (contenido propio, confiable) y se
+estiliza con `.prose` en `NotaDetalle.css`. Hay 3 notas de ejemplo (MCP/GeoAgent, webhooks/
+TiendaKit, multi-tenant/DentalSaaS).
 
 ## Secciones
 
 | ID | Componente | Estado |
 |---|---|---|
 | `#hero` | Hero | ✅ Terminal, badge verde, typewriter 3 frases, scroll arrow |
-| `#proyectos` | Proyectos | ✅ 5 proyectos con carrusel 4 imágenes + lightbox (KolisKit primero, CoreFrame último) |
+| `#servicios` | Servicios | ✅ 6 servicios (web, e-commerce, APIs, SaaS, IA, dashboards); cada card enlaza a un proyecto de ejemplo |
+| `#proyectos` | Proyectos | ✅ 8 proyectos; cada card enlaza a su caso de estudio (`Ver caso →`) |
 | `#stack` | Stack | ✅ 14 tecnologías con íconos SVG |
 | `#sobre-mi` | SobreMi | ✅ Bio + JSON panel + stats |
+| `#notas-preview` | NotasPreview | ✅ Teaser "Del blog": 2 notas recientes + enlace a `/notas` |
 | `#contacto` | Contacto | ✅ LinkedIn, GitHub, Email, WhatsApp |
+
+Cada `/proyectos/:slug` es una página de caso de estudio (`pages/ProyectoDetalle.jsx`):
+encabezado + galería/placeholder + meta sticky (rol/periodo/estado) + problema · solución ·
+arquitectura · decisiones · resultados + nav anterior/siguiente.
 
 ## Proyectos en data/proyectos.js
 
-Campos por proyecto:
-- `id`, `nombre`, `descripcion`, `stack[]`
+8 proyectos (orden = orden en el home). Campos de card:
+- `id`, `slug`, `nombre`, `tagline`, `descripcion`, `stack[]`
 - `estado`: `'Lanzado'` | `'En desarrollo'`
-- `imagenes`: array de imports desde `../assets/proyectos/` (vacío → muestra placeholder)
-- `github`, `demo`: URLs o `''`
+- `imagenes`: imports desde `../assets/proyectos/` (vacío → placeholder de marca)
+- `github`, `demo`: URLs o `''`; `destacado`: bool (opcional)
+
+Campo `caso` (caso de estudio, opcional pero presente en los 8):
+`{ rol, periodo, resumen, problema, solucion, arquitectura[], decisiones[{titulo,detalle}], resultados[] }`
+La página degrada con gracia si falta cualquier bloque. Helper `getProyecto(slug)`.
+
+**Los 8:** KolisKit, TiendaKit, LotesRB, Biodont, CoreFrame, **GeoAgent** (con capturas) ·
+Metriboard, DentalSaaS (sin capturas → placeholder de marca). ⚠️ **GeoAgent es proyecto
+propio de KolisCode** — nunca atribuirlo a GeoGeeks/semillero/Esri. Sus capturas (`geoagent-1..3`)
+se tomaron del frontend local **recortando la franja superior** que muestra "GeoGeeks · Esri
+Colombia" (branding a revisar en la propia app). El modo mapa y Metriboard/DentalSaaS necesitan
+sus backends + DB con datos sembrados para capturarse bien → por eso siguen con placeholder.
 
 Para agregar un proyecto nuevo:
-1. Copiar capturas a `src/assets/proyectos/nombre-{1-4}.png`
-2. Importar en `proyectos.js`
-3. Agregar objeto al array
+1. (Opcional) capturas en `src/assets/proyectos/nombre-{1-4}.webp` + imports en `proyectos.js`
+2. Agregar objeto al array con `slug` único y su `caso`
 
 ## Componentes clave
 
@@ -130,8 +186,13 @@ Dominio: `koliscode.com` con SSL Certbot.
 
 - Recapturar `koliskit-{1-4}.webp` (muestran el dominio viejo kolisevm en la UI) tras el
   próximo deploy de KolisKit con las tools nuevas
-- Más proyectos candidatos: Nordik, MetriBoard, GeoAgent — pendiente decisión + capturas
-  (sin deploy público: levantar local o placeholder de marca)
+- **Revamp en curso (jul-2026):** Fase 1 hecha (router + páginas de caso de estudio + 3
+  proyectos nuevos). Pendiente: capturas de GeoAgent/Metriboard/DentalSaaS (sin deploy
+  público → local o placeholder). Secciones **Servicios** ✅, **Blog/Notas** ✅ y **teaser de
+  notas** ✅. **Transiciones de página** ✅ (fade en `route-fade`, `components/Layout/Layout.css`).
+  **Capturas GeoAgent** ✅ (3 reales). Orden home: Hero → Servicios → Proyectos → Stack → SobreMi →
+  NotasPreview → Contacto. Pendiente: capturas de Metriboard/DentalSaaS (requieren backend+DB con
+  seed) y migrar a TS.
 - Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
 - Migrar a TypeScript
 - Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
