@@ -27,6 +27,10 @@ import geoagent1 from '../assets/proyectos/geoagent-1.webp'
 import geoagent2 from '../assets/proyectos/geoagent-2.webp'
 import geoagent3 from '../assets/proyectos/geoagent-3.webp'
 
+import dentalsaas1 from '../assets/proyectos/dentalsaas-1.webp'
+import dentalsaas2 from '../assets/proyectos/dentalsaas-2.webp'
+import dentalsaas3 from '../assets/proyectos/dentalsaas-3.webp'
+
 /**
  * Fuente de verdad de proyectos.
  *
@@ -272,9 +276,9 @@ export const proyectos = [
         nombre: 'DentalSaaS',
         tagline: 'La versión SaaS multi-consultorio de la gestión dental.',
         descripcion: 'Plataforma SaaS de gestión odontológica pensada para múltiples consultorios: evoluciona la idea de Biodont hacia un producto multi-tenant.',
-        stack: ['Prisma', 'PostgreSQL', 'Node.js', 'React'],
+        stack: ['NestJS', 'Angular', 'Prisma', 'PostgreSQL', 'Redis'],
         estado: 'En desarrollo',
-        imagenes: [],
+        imagenes: [dentalsaas1, dentalsaas2, dentalsaas3],
         github: '',
         demo: '',
         caso: {
