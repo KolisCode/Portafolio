@@ -1,39 +1,50 @@
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 import markSvg from '../../assets/mark.svg';
 import { useActiveSection } from '../../hooks/useActiveSection.js';
 
-const NAV_LINKS = [
-  { href: '#proyectos', label: 'proyectos', id: 'proyectos' },
-  { href: '#stack',     label: 'stack',     id: 'stack'     },
-  { href: '#sobre-mi',  label: 'sobre mí',  id: 'sobre-mi'  },
-  { href: '#contacto',  label: 'contacto',  id: 'contacto'  },
+// Links de sección del home (scroll a `/#hash`).
+const SECTION_LINKS = [
+  { hash: 'servicios', label: 'servicios' },
+  { hash: 'proyectos', label: 'proyectos' },
+  { hash: 'stack',     label: 'stack'     },
+  { hash: 'sobre-mi',  label: 'sobre mí'  },
+  { hash: 'contacto',  label: 'contacto'  },
 ];
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const activeId = useActiveSection(NAV_LINKS.map((l) => l.id));
+  const { pathname } = useLocation();
+  const isHome = pathname === '/';
+  const enNotas = pathname.startsWith('/notas');
+  const activeId = useActiveSection(SECTION_LINKS.map((l) => l.hash));
 
   const close = () => setOpen(false);
 
+  const sectionCls = (hash, base) =>
+    `${base}${isHome && activeId === hash ? ' navbar__link--active' : ''}`;
+
   return (
     <nav className={`navbar${open ? ' navbar--open' : ''}`}>
-      <a href="#hero" className="navbar__brand" onClick={close}>
+      <Link to="/" className="navbar__brand" onClick={close}>
         <img src={markSvg} alt="KolisCode mark" className="navbar__mark" />
         <span className="navbar__name">KolisCode</span>
-      </a>
+      </Link>
 
       <ul className="navbar__links">
-        {NAV_LINKS.map(({ href, label, id }) => (
-          <li key={id}>
-            <a
-              href={href}
-              className={`navbar__link${activeId === id ? ' navbar__link--active' : ''}`}
-            >
+        {SECTION_LINKS.map(({ hash, label }) => (
+          <li key={hash}>
+            <Link to={`/#${hash}`} className={sectionCls(hash, 'navbar__link')}>
               {label}
-            </a>
+            </Link>
           </li>
         ))}
+        <li>
+          <Link to="/notas" className={`navbar__link${enNotas ? ' navbar__link--active' : ''}`}>
+            notas
+          </Link>
+        </li>
       </ul>
 
       <button
@@ -47,16 +58,23 @@ function Navbar() {
 
       {open && (
         <div className="navbar__mobile">
-          {NAV_LINKS.map(({ href, label, id }) => (
-            <a
-              key={id}
-              href={href}
-              className={`navbar__mobile-link${activeId === id ? ' navbar__link--active' : ''}`}
+          {SECTION_LINKS.map(({ hash, label }) => (
+            <Link
+              key={hash}
+              to={`/#${hash}`}
+              className={sectionCls(hash, 'navbar__mobile-link')}
               onClick={close}
             >
               {label}
-            </a>
+            </Link>
           ))}
+          <Link
+            to="/notas"
+            className={`navbar__mobile-link${enNotas ? ' navbar__link--active' : ''}`}
+            onClick={close}
+          >
+            notas
+          </Link>
         </div>
       )}
     </nav>

@@ -1,0 +1,23 @@
+/* Transición de entrada al cambiar de ruta.
+   Se remonta vía key={pathname} en Layout, así que la animación se reproduce en cada
+   navegación de página (no en los saltos a #secciones del home, que no cambian pathname). */
+.route-fade {
+  animation: routeFade 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes routeFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-fade {
+    animation: none;
+  }
+}

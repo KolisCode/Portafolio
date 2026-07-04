@@ -135,6 +135,16 @@
   color: var(--color-text);
 }
 
+.proyecto__nombre-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.proyecto__nombre-link:hover {
+  color: var(--color-accent);
+}
+
 /* Badge */
 .proyecto__badge {
   font-family: var(--font-mono);
@@ -206,6 +216,21 @@
 
 .proyecto__link:hover {
   color: var(--color-accent);
+}
+
+/* "Ver caso" — link primario de la card, empujado a la izquierda */
+.proyecto__link--caso {
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-right: auto;
+}
+
+.proyecto__link--caso span {
+  transition: transform 0.2s ease;
+}
+
+.proyecto__link--caso:hover span {
+  transform: translateX(3px);
 }
 
 @media (max-width: 480px) {
