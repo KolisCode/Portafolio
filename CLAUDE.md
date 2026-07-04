@@ -60,8 +60,7 @@ src/
 │       ├── tiendakit-{1-4}.webp
 │       ├── lotesrb-{1-4}.webp
 │       ├── biodont-{1-4}.webp
-│       ├── koliskit-{1-4}.webp    ← ⚠️ muestran la landing vieja (kolisevm) — recapturar tras
-│       │                             el próximo deploy de KolisKit con las tools nuevas
+│       ├── koliskit-{1-4}.webp    ← recapturadas 2026-07-02 de la landing live (tools nuevas visibles)
 │       └── coreframe-{1-4}.webp   ← tomadas con Playwright de coreframe.koliscode.com (1440×900)
 ├── components/
 │   ├── Layout/                    ← shell: Navbar + <Outlet> + Footer + scroll-a-hash/tope por ruta
@@ -184,15 +183,14 @@ Dominio: `koliscode.com` con SSL Certbot.
 
 ## Pendientes
 
-- Recapturar `koliskit-{1-4}.webp` (muestran el dominio viejo kolisevm en la UI) tras el
-  próximo deploy de KolisKit con las tools nuevas
 - **Revamp en curso (jul-2026):** Fase 1 hecha (router + páginas de caso de estudio + 3
-  proyectos nuevos). Pendiente: capturas de GeoAgent/Metriboard/DentalSaaS (sin deploy
-  público → local o placeholder). Secciones **Servicios** ✅, **Blog/Notas** ✅ y **teaser de
-  notas** ✅. **Transiciones de página** ✅ (fade en `route-fade`, `components/Layout/Layout.css`).
+  proyectos nuevos). Secciones **Servicios** ✅, **Blog/Notas** ✅ y **teaser de notas** ✅.
+  **Transiciones de página** ✅ (fade en `route-fade`, `components/Layout/Layout.css`).
   **Capturas GeoAgent** ✅ (3 reales). Orden home: Hero → Servicios → Proyectos → Stack → SobreMi →
   NotasPreview → Contacto. Pendiente: capturas de Metriboard/DentalSaaS (requieren backend+DB con
   seed) y migrar a TS.
+- Otro proyecto candidato: Nordik — pendiente decisión + capturas (sin deploy público:
+  levantar local o placeholder de marca)
 - Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
 - Migrar a TypeScript
 - Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
@@ -205,3 +203,5 @@ Dominio: `koliscode.com` con SSL Certbot.
 - `prefers-reduced-motion` (CSS global + typewriter congelado) y `:focus-visible` ámbar
 - CoreFrame añadido (capturas Playwright); TiendaKit → "Lanzado" con demo
 - Auditoría móvil 375/768 con Playwright: sin roturas, no hicieron falta media queries nuevas
+- Capturas koliskit-* recapturadas de la landing nueva y **deployado a koliscode.com**
+  (robots/sitemap/OG validados en vivo)
