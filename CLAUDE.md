@@ -202,6 +202,16 @@ Dominio: `koliscode.com` con SSL Certbot.
 - Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
 - KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado
 
+### Hecho 2026-07-04
+- **LotesRB `lotesrb-4` recapturada.** La captura anterior mostraba la página "El Proyecto"
+  con literales sin rellenar (`[Nombre del Proyecto]`, `[X] min · [X] km`). Se arreglaron en la
+  app real (`Robinson/lotes-rb`, commit en su `developer-ubuntu`) y se recapturó con Playwright.
+  Encuadre 1100×593 (mismo aspecto que `lotesrb-1..3`, para que el carrusel no salte). Las otras
+  3 de LotesRB ya estaban bien pobladas → se dejaron. Las de Biodont también quedaron intactas.
+- Nota de tooling (capturas en esta Ubuntu WSL): el chromium headless no trae emoji a color →
+  hubo que instalar `NotoColorEmoji.ttf` en `~/.local/share/fonts`; conversión a WebP con `sharp`
+  (no hay `cwebp`/`convert` en el sistema). Ver memoria `playwright-captures-ubuntu`.
+
 ### Hecho 2026-07-02 (sesión orquestada)
 - SEO: og/twitter image absolutas + og:url + canonical + theme-color + JSON-LD Person;
   robots.txt + sitemap.xml; verificación Search Console movida a `public/`
