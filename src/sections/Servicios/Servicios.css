@@ -12,12 +12,13 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .servicio__card:hover {
   transform: translateY(-4px);
   border-color: rgba(251, 191, 36, 0.35);
+  box-shadow: 0 12px 34px -14px rgba(251, 191, 36, 0.3);
 }
 
 .servicio__icon {

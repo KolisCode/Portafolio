@@ -206,3 +206,14 @@
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50%       { transform: translateX(-50%) translateY(8px); }
 }
+
+/* Entrada escalonada del hero al cargar la página */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero__available   { animation: heroIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both; }
+.hero__terminal    { animation: heroIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both; }
+.hero__description { animation: heroIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.30s both; }
+.hero__actions     { animation: heroIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both; }

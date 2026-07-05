@@ -46,7 +46,7 @@ function Servicios() {
       <p className="section__label">servicios</p>
       <h2 className="section__title">Lo que puedo construir para ti</h2>
 
-      <div className="servicios__grid">
+      <div className="servicios__grid" data-stagger>
         {servicios.map(({ titulo, descripcion, ejemplo, icon: Icon }) => (
           <article key={titulo} className="servicio__card">
             <span className="servicio__icon"><Icon /></span>

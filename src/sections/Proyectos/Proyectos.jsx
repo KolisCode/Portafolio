@@ -15,7 +15,7 @@ function Proyectos() {
       <p className="section__label">proyectos</p>
       <h2 className="section__title">Cosas que construí</h2>
 
-      <div className="proyectos__grid">
+      <div className="proyectos__grid" data-stagger>
         {proyectos.map((p) => (
           <article key={p.id} className="proyecto__card">
 

@@ -162,24 +162,33 @@ function Cotizacion() {
                 />
                 <span>A definir juntos</span>
               </label>
-              {!datos.presupuestoADefinir && (
-                <div className="cotizacion__budget-inputs">
-                  <select value={datos.moneda} onChange={set('moneda')} aria-label="Moneda">
-                    {MONEDAS.map((m) => (
-                      <option key={m}>{m}</option>
-                    ))}
-                  </select>
-                  <input
-                    type="number"
-                    min="0"
-                    step="any"
-                    inputMode="numeric"
-                    value={datos.monto}
-                    onChange={set('monto')}
-                    placeholder="Monto aproximado"
-                  />
-                </div>
-              )}
+              <div
+                className={`cotizacion__budget-inputs${
+                  datos.presupuestoADefinir ? ' cotizacion__budget-inputs--hidden' : ''
+                }`}
+                aria-hidden={datos.presupuestoADefinir}
+              >
+                <select
+                  value={datos.moneda}
+                  onChange={set('moneda')}
+                  aria-label="Moneda"
+                  disabled={datos.presupuestoADefinir}
+                >
+                  {MONEDAS.map((m) => (
+                    <option key={m}>{m}</option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  min="0"
+                  step="any"
+                  inputMode="numeric"
+                  value={datos.monto}
+                  onChange={set('monto')}
+                  placeholder="Monto aproximado"
+                  disabled={datos.presupuestoADefinir}
+                />
+              </div>
             </div>
 
             <label className="cotizacion__field">

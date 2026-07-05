@@ -14,8 +14,8 @@ function Home() {
   return (
     <>
       <Hero />
-      <div data-reveal><Servicios /></div>
-      <div data-reveal><Proyectos /></div>
+      <div data-reveal="fade"><Servicios /></div>
+      <div data-reveal="fade"><Proyectos /></div>
       <div data-reveal data-delay="100"><Stack /></div>
       <div data-reveal><SobreMi /></div>
       <div data-reveal><NotasPreview /></div>
