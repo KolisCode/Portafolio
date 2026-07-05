@@ -17,17 +17,17 @@ function SobreMi() {
           <p>
             Soy Jhohan Bustamante, desarrollador full-stack freelance de Colombia.
             Trabajo bajo la marca <span className="sobre-mi__marca">KolisCode</span> y
-            construyo aplicaciones web completas para negocios reales — desde el diseño
-            de la base de datos hasta la interfaz que ve el usuario final.
+            construyo aplicaciones web completas para negocios reales, desde el diseño
+            de la base de datos hasta la interfaz que ve el usuario.
           </p>
           <p>
-            Me especializo en el ecosistema Angular + NestJS para proyectos empresariales,
-            y en Next.js + Node.js cuando el proyecto lo exige. Cada stack lo elijo según
-            el problema, no al revés.
+            Me muevo sobre todo en Angular + NestJS para proyectos empresariales, y en
+            Next.js + Node.js cuando el proyecto lo pide. El stack lo decido según lo que
+            necesita cada caso.
           </p>
           <p>
-            Cuando no estoy escribiendo código, estoy aprendiendo algo nuevo o diseñando
-            el siguiente proyecto que va a resolver un problema concreto.
+            Cuando no estoy programando, suelo estar probando alguna herramienta nueva o
+            dándole vueltas al siguiente proyecto.
           </p>
         </div>
 

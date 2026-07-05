@@ -25,10 +25,10 @@ En vez de una llave a toda la base, le doy al modelo un **conjunto de herramient
 
 El modelo deja de ser quien *hace* y pasa a ser quien *decide qué hacer*. Elige la herramienta, la encadena con otras, interpreta el resultado. Pero cada dato que sale de su boca proviene de una consulta real y auditable.
 
-> El modelo razona; las herramientas ejecutan. Esa separación es toda la diferencia.
+> El modelo razona; las herramientas ejecutan. Casi toda la confianza en el sistema se apoya en esa línea.
 
 ## Lo que ganas
 
 Con este diseño, la respuesta de un copiloto se vuelve **defendible**: puedes trazar cada número hasta la operación que lo produjo. Y agregar una capacidad nueva es agregar una herramienta bien acotada, no ampliar la superficie de ataque.
 
-Es más trabajo por adelantado que un `prompt → SQL → ejecutar`. Pero es la diferencia entre una demo y algo en lo que un profesional confía para tomar decisiones.
+Es más trabajo por adelantado que un `prompt → SQL → ejecutar`. Pero es lo que hace que alguien pueda apoyarse en el copiloto para decidir de verdad, y no solo verlo funcionar en una demo.

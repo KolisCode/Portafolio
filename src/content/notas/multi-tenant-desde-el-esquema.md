@@ -11,7 +11,7 @@ La respuesta no es "agrego un `WHERE consultorio_id = ?` en cada query". Eso es 
 
 ## Por qué el filtro manual falla
 
-Si el aislamiento entre clientes depende de que **cada consulta** recuerde filtrar por tenant, basta **una** que se te olvide para filtrar mal —y en un SaaS, "filtrar mal" significa mostrarle a un cliente los datos de otro. No hay bug más caro en términos de confianza.
+Si el aislamiento entre clientes depende de que **cada consulta** recuerde filtrar por tenant, basta **una** que se te olvide para filtrar mal. Y en un SaaS, "filtrar mal" significa mostrarle a un cliente los datos de otro. Pocos errores te cobran tan caro en confianza.
 
 El aislamiento no puede ser una convención que el desarrollador aplica con disciplina. Tiene que ser una **propiedad del sistema**.
 
@@ -29,6 +29,6 @@ Para DentalSaaS diseñé el esquema con el `tenant` como ciudadano de primera cl
 
 - **El día uno importa.** Rediseñar el aislamiento con datos de producción encima es una migración de terror. Diseñarlo desde el esquema es casi gratis.
 - **Reusa el dominio, rediseña la tenencia.** La lógica clínica de Biodont ya estaba validada; el trabajo nuevo fue exclusivamente la capa de multi-tenancy. Separar esas dos cosas hizo el salto manejable.
-- **Aislamiento por diseño, no por disciplina.** Si depende de que alguien se acuerde, no es aislamiento.
+- **Aislamiento por diseño, no por disciplina.** Si depende de que alguien se acuerde de filtrar en cada query, no es aislamiento de verdad.
 
-Un SaaS no es una app con más usuarios. Es una app donde la frontera entre clientes es sagrada —y esa frontera se dibuja en el esquema.
+Un SaaS no es una app con más usuarios: es una app donde la frontera entre clientes no se puede romper, y esa frontera se define en el esquema.

@@ -61,7 +61,7 @@ export const proyectos = [
             periodo: '2025',
             resumen: 'Un conjunto de micro-utilidades que la gente usa a diario, empaquetadas como producto: landing pública gratuita por encima de una API REST monetizable con planes y llaves.',
             problema: 'Las utilidades sueltas (acortadores, generadores de QR, conversores) están dispersas en sitios llenos de anuncios y sin API confiable. Quería un solo lugar con UX limpia y, debajo, una API que otros desarrolladores pudieran consumir con límites por plan.',
-            solucion: 'Construí un monolito NestJS que expone cada utilidad como módulo independiente, con una capa de autenticación por API key y rate limiting configurable por plan. La landing en Tailwind consume la misma API que los clientes externos — misma superficie, sin caminos privilegiados.',
+            solucion: 'Construí un monolito NestJS que expone cada utilidad como módulo independiente, con una capa de autenticación por API key y rate limiting configurable por plan. La landing en Tailwind consume la misma API que cualquier cliente externo, sin atajos internos.',
             arquitectura: [
                 'NestJS modular: un módulo por utilidad (links, qr, password, currency, units) desacoplado del resto.',
                 'Prisma + PostgreSQL para llaves de API, planes, y analítica de clicks del acortador.',
@@ -109,7 +109,7 @@ export const proyectos = [
             ],
             resultados: [
                 'Demo pública operativa en tiendakit.koliscode.com con checkout real.',
-                'Plantilla reutilizable: una tienda nueva es configuración + branding, no reescritura.',
+                'Plantilla reutilizable: montar una tienda nueva es configurarla y aplicarle marca, casi sin tocar código.',
             ],
         },
     },
@@ -136,7 +136,7 @@ export const proyectos = [
                 'Autenticación JWT que separa el catálogo público del panel de administración.',
             ],
             decisiones: [
-                { titulo: 'Panel de administración propio', detalle: 'El cliente mantiene el inventario sin depender del desarrollador — publicar un lote es una operación de negocio, no un deploy.' },
+                { titulo: 'Panel de administración propio', detalle: 'El cliente mantiene el inventario sin depender del desarrollador; publicar un lote es parte del día a día del negocio y no necesita un despliegue.' },
             ],
             resultados: [
                 'Portal en producción en lotesrb.koliscode.com.',
@@ -221,18 +221,18 @@ export const proyectos = [
         caso: {
             rol: 'Arquitectura y desarrollo (proyecto propio)',
             periodo: '2025 – actual',
-            resumen: 'Un copiloto que deja hacer análisis geoestadístico conversando: el usuario pregunta en lenguaje natural y un agente de IA orquesta herramientas sobre datos espaciales reales (PostGIS, ArcGIS) para responder con datos, no con texto genérico.',
+            resumen: 'Un copiloto que deja hacer análisis geoestadístico conversando: el usuario pregunta en lenguaje natural y un agente de IA orquesta herramientas sobre datos espaciales reales (PostGIS, ArcGIS) para responder apoyándose en datos consultados de verdad.',
             problema: 'El análisis geoespacial exige dominar SQL espacial, PostGIS y herramientas GIS. Mucha gente sabe qué pregunta hacerle a los datos, pero no cómo traducirla a operaciones espaciales. Quería cerrar esa brecha con lenguaje natural, sin sacrificar rigor.',
             solucion: 'Diseñé un orquestador que conecta un modelo de lenguaje con un conjunto de herramientas (MCP) que ejecutan operaciones espaciales reales sobre PostGIS y ArcGIS. El modelo no inventa resultados: elige y encadena herramientas, y cada respuesta se apoya en datos consultados de verdad.',
             arquitectura: [
                 'API en FastAPI como punto de entrada del copiloto.',
                 'Orquestador que coordina el modelo de lenguaje con herramientas expuestas vía MCP (Model Context Protocol).',
                 'Herramientas que ejecutan consultas espaciales reales sobre PostGIS y ArcGIS.',
-                'Separación estricta entre razonamiento del modelo y ejecución de operaciones — el modelo decide, las herramientas hacen.',
+                'El razonamiento del modelo va separado de la ejecución: el modelo elige qué hacer, pero nunca toca los datos directamente.',
             ],
             decisiones: [
                 { titulo: 'Herramientas (MCP) en vez de generación libre de SQL', detalle: 'Exponer operaciones espaciales acotadas como herramientas hace las respuestas verificables y seguras, en lugar de dejar que el modelo escriba SQL arbitrario.' },
-                { titulo: 'El modelo razona, las herramientas ejecutan', detalle: 'Cada dato que devuelve el copiloto proviene de una consulta real, no de la memoria del modelo — clave para confiar en el análisis.' },
+                { titulo: 'El modelo razona, las herramientas ejecutan', detalle: 'Cada dato que devuelve el copiloto sale de una consulta real y no de lo que el modelo recuerde, que es justo lo que te deja confiar en el análisis.' },
             ],
             resultados: [
                 'Núcleo del copiloto funcional (FastAPI + orquestador + herramientas MCP sobre PostGIS/ArcGIS).',
@@ -255,7 +255,7 @@ export const proyectos = [
             rol: 'Full-stack (API de métricas + dashboard)',
             periodo: '2025 – actual',
             resumen: 'Un tablero para ver la salud de un negocio de un vistazo: la API agrega datos crudos en indicadores y los sirve a un dashboard con visualizaciones.',
-            problema: 'Los datos de negocio suelen estar dispersos y sin una vista unificada. Sin un tablero, decidir se vuelve anecdótico en lugar de estar respaldado por métricas.',
+            problema: 'Los datos de negocio suelen estar dispersos y sin una vista unificada. Sin un tablero, uno termina decidiendo por corazonada en vez de mirar las cifras.',
             solucion: 'Una API NestJS que centraliza y agrega los datos en métricas, expuestas a un frontend que las presenta como indicadores y gráficos legibles.',
             arquitectura: [
                 'API NestJS (metriboard-api) + Prisma para modelar y agregar métricas.',
@@ -263,7 +263,7 @@ export const proyectos = [
                 'Frontend de dashboard que consume la API y renderiza KPIs y gráficos.',
             ],
             decisiones: [
-                { titulo: 'Agregación en el backend', detalle: 'Las métricas se calculan del lado del servidor para que el frontend solo pinte — resultados consistentes sin importar el cliente.' },
+                { titulo: 'Agregación en el backend', detalle: 'Las métricas se calculan en el servidor y el frontend solo se encarga de pintarlas, así los números salen iguales sin importar quién los consulte.' },
             ],
             resultados: [
                 'API de métricas en desarrollo, código en GitHub.',
@@ -293,7 +293,7 @@ export const proyectos = [
                 'Frontend de gestión pensado para operar varios consultorios.',
             ],
             decisiones: [
-                { titulo: 'Multi-tenant desde el modelo de datos', detalle: 'El aislamiento entre consultorios se diseña en el esquema, no como parche posterior — es la decisión que define un SaaS.' },
+                { titulo: 'Multi-tenant desde el modelo de datos', detalle: 'El aislamiento entre consultorios se diseña en el esquema desde el principio; es lo que de verdad convierte esto en un SaaS y no en varias copias de la misma app.' },
                 { titulo: 'Aprovechar el dominio de Biodont', detalle: 'La lógica clínica ya validada en Biodont se reusa; el trabajo nuevo es la capa de tenancy y producto.' },
             ],
             resultados: [

@@ -39,8 +39,9 @@ function Hero() {
           </div>
 
           <p className="hero__description">
-            Construyo aplicaciones web completas — de la base de datos a la interfaz.
-            Angular, NestJS, React, Node.js. Proyectos reales, código limpio.
+            Construyo aplicaciones web completas, de la base de datos a la interfaz.
+            Trabajo con Angular, NestJS, React y Node.js. Me importa que el código
+            quede limpio y que los proyectos terminen en producción, no en una demo.
           </p>
 
           <div className="hero__actions">

@@ -5,7 +5,7 @@ description: El error más común al integrar una pasarela de pago es marcar la 
 tags: e-commerce, backend, pagos
 ---
 
-Al integrar **MercadoPago** en TiendaKit, la pregunta clave no fue *cómo cobrar*, sino *cómo saber con certeza que el cobro ocurrió*. La respuesta separa las tiendas que cuadran caja de las que no.
+Al integrar **MercadoPago** en TiendaKit, la pregunta clave no fue *cómo cobrar*, sino *cómo saber con certeza que el cobro ocurrió*. De cómo la respondas depende que la caja te cuadre a fin de mes.
 
 ## El camino fácil (y roto)
 
@@ -40,4 +40,4 @@ El redirect solo sirve para **mostrarle algo bonito al usuario**. La orden cambi
 - **El webhook es idempotente**: si llega dos veces (y llega), el segundo no duplica nada.
 - **El redirect no toca el estado de la orden.** Cero excepciones.
 
-Es una capa más de trabajo, pero es la que hace que la caja cuadre al final del día. Y cuadrar caja no es negociable.
+Es una capa más de trabajo, pero es la que hace que la caja cuadre al final del día. Y ahí no hay margen para improvisar.
