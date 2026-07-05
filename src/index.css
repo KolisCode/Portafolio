@@ -8,6 +8,7 @@
 
 :root {
   --color-bg: #0f0800;
+  --color-bg-2: #160b01;
   --color-surface: #1a0c00;
   --color-surface-2: #231400;
   --color-text: #ffedd5;
@@ -40,6 +41,59 @@ body {
 
 main {
   padding-top: 64px;
+}
+
+/* ── Fondos de sección (full-bleed) ──────────────────────────────────────
+   Dan ritmo al scroll variando el tono y la "forma" del fondo entre
+   secciones, siempre dentro de la familia ámbar/oscuro. Cada banda es
+   opaca, así que cubre la rejilla global del body; el Hero conserva esa
+   rejilla como firma. Se asigna una textura por sección en Home.jsx. */
+.band {
+  background-color: var(--color-bg);
+}
+
+.band--tint {
+  background-color: var(--color-bg-2);
+}
+
+/* Puntos */
+.band--dots {
+  background-image: radial-gradient(rgba(251, 191, 36, 0.06) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+/* Diagonales tenues */
+.band--diagonal {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0 24px,
+    rgba(251, 191, 36, 0.03) 24px 25px
+  );
+}
+
+/* Rejilla amplia (más suelta que la del body) */
+.band--grid {
+  background-image:
+    linear-gradient(rgba(251, 191, 36, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 191, 36, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Glow ambiental (luz del terminal) */
+.band--glow {
+  background-image: radial-gradient(
+    ellipse 60% 55% at 50% 45%,
+    rgba(251, 191, 36, 0.06),
+    transparent 70%
+  );
+}
+
+.band--glow-top {
+  background-image: radial-gradient(
+    ellipse 75% 60% at 50% 0%,
+    rgba(251, 191, 36, 0.07),
+    transparent 65%
+  );
 }
 
 /* Scroll reveal */
