@@ -5,6 +5,7 @@ import Proyectos from '../sections/Proyectos/Proyectos.jsx'
 import Stack from '../sections/Stack/Stack.jsx'
 import SobreMi from '../sections/SobreMi/SobreMi.jsx'
 import NotasPreview from '../sections/NotasPreview/NotasPreview.jsx'
+import Cotizacion from '../sections/Cotizacion/Cotizacion.jsx'
 import Contacto from '../sections/Contacto/Contacto.jsx'
 
 function Home() {
@@ -18,6 +19,7 @@ function Home() {
       <div data-reveal data-delay="100"><Stack /></div>
       <div data-reveal><SobreMi /></div>
       <div data-reveal><NotasPreview /></div>
+      <div data-reveal><Cotizacion /></div>
       <div data-reveal data-delay="100"><Contacto /></div>
     </>
   )

@@ -10,6 +10,7 @@ const SECTION_LINKS = [
   { hash: 'proyectos', label: 'proyectos' },
   { hash: 'stack',     label: 'stack'     },
   { hash: 'sobre-mi',  label: 'sobre mí'  },
+  { hash: 'cotizacion', label: 'cotización' },
   { hash: 'contacto',  label: 'contacto'  },
 ];
 

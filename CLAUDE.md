@@ -79,6 +79,7 @@ src/
 │   ├── Stack/                     ← 4 columnas por categoría con íconos SVG inline
 │   ├── SobreMi/                   ← bio + koliscode.json + stats (3+ años, 5+ proyectos)
 │   ├── NotasPreview/              ← teaser "Del blog": 2 notas recientes + "Ver todas →" a /notas
+│   ├── Cotizacion/                ← form de cotización; compone mensaje y abre WhatsApp (fallback mailto). Sin backend.
 │   └── Contacto/                  ← LinkedIn, GitHub, Email, WhatsApp
 └── data/
     ├── proyectos.js               ← fuente de verdad: imports de imágenes + metadata + caso de estudio
@@ -115,7 +116,19 @@ TiendaKit, multi-tenant/DentalSaaS).
 | `#stack` | Stack | ✅ 14 tecnologías con íconos SVG |
 | `#sobre-mi` | SobreMi | ✅ Bio + JSON panel + stats |
 | `#notas-preview` | NotasPreview | ✅ Teaser "Del blog": 2 notas recientes + enlace a `/notas` |
+| `#cotizacion` | Cotizacion | ✅ Formulario de solicitud de cotización → prefill WhatsApp (+ fallback mailto) |
 | `#contacto` | Contacto | ✅ LinkedIn, GitHub, Email, WhatsApp |
+
+### Cotización (`#cotizacion`)
+
+Sección de captación de leads (entre NotasPreview y Contacto en el home). Es un `<form>`
+con estética terminal (`nueva-solicitud.txt`): campos nombre*, email, tipo de proyecto,
+presupuesto, plazo y descripción*. **No hay backend** (el portafolio es estático en nginx):
+al enviar, `componerMensaje()` arma un texto estructurado y el botón primario abre
+`https://wa.me/573208146176?text=…` (WhatsApp prellenado); el botón fantasma "Enviar por
+correo" hace lo mismo vía `mailto:jhohantma@gmail.com`, reusando la validación nativa del
+form (`reportValidity()`). Cero dependencias de terceros. Para cambiar el destino: constantes
+`WHATSAPP`/`EMAIL` en `sections/Cotizacion/Cotizacion.jsx`.
 
 Cada `/proyectos/:slug` es una página de caso de estudio (`pages/ProyectoDetalle.jsx`):
 encabezado + galería/placeholder + meta sticky (rol/periodo/estado) + problema · solución ·
@@ -195,12 +208,25 @@ Dominio: `koliscode.com` con SSL Certbot.
   **Capturas GeoAgent** ✅ (3) y **DentalSaaS** ✅ (3, del frontend Angular local). Orden home:
   Hero → Servicios → Proyectos → Stack → SobreMi → NotasPreview → Contacto. Pendiente: capturas de
   Metriboard (bloqueadas: su frontend es un esqueleto sin datos) y migrar a TS.
+  Orden actualizado: … → NotasPreview → **Cotizacion** → Contacto.
+- ⚠️ **Producción desfasada (detectado 2026-07-05):** el build en vivo en `koliscode.com`
+  es del 4-jul 06:41 — **anterior** al commit `4338226` (recaptura de `lotesrb-4`, 4-jul 19:47)
+  y a la sección de cotización. El `lotesrb-4` desplegado sigue siendo el viejo (con
+  placeholders). **Pendiente deploy** (el usuario marca cuándo): push `developer-ubuntu` → PR
+  a `master` → `npm run build` → `deploy_static` a `/var/www/portafolio`.
 - Otro proyecto candidato: Nordik — pendiente decisión + capturas (sin deploy público:
   levantar local o placeholder de marca)
 - Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
 - Migrar a TypeScript
 - Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
 - KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado
+
+### Hecho 2026-07-05
+- **Sección de cotización (`#cotizacion`)** añadida entre NotasPreview y Contacto. Form con
+  estética terminal → prefill WhatsApp (botón primario) + fallback `mailto` (botón fantasma),
+  sin backend. Link "cotización" en Navbar (desktop + móvil). `Home.jsx` monta `<Cotizacion />`.
+  Verificado: `eslint` limpio, `npm run build` OK, render confirmado con captura headless (CDP).
+  **Aún no desplegado** (el usuario marca cuándo, ver ⚠️ en Pendientes).
 
 ### Hecho 2026-07-04
 - **LotesRB `lotesrb-4` recapturada.** La captura anterior mostraba la página "El Proyecto"
