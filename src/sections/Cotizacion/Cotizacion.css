@@ -151,6 +151,30 @@
   color: var(--color-text);
 }
 
+/* Presupuesto: toggle "A definir" + moneda/monto */
+.cotizacion__check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.cotizacion__check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.cotizacion__budget-inputs {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0.75rem;
+  margin-top: 0.65rem;
+}
+
 .cotizacion__actions {
   display: flex;
   gap: 0.85rem;

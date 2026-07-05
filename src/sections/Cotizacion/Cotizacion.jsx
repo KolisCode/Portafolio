@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import './Cotizacion.css';
 
 const WHATSAPP = '573208146176';
-const EMAIL = 'jhohantma@gmail.com';
+const EMAIL = 'JhohanBustamante@koliscode.com';
 
 const TIPOS = [
   'Sitio web',
@@ -14,14 +14,7 @@ const TIPOS = [
   'Otro',
 ];
 
-const PRESUPUESTOS = [
-  'A definir juntos',
-  'Menos de USD 1.000',
-  'USD 1.000 – 3.000',
-  'USD 3.000 – 5.000',
-  'USD 5.000 – 10.000',
-  'Más de USD 10.000',
-];
+const MONEDAS = ['USD', 'COP', 'EUR'];
 
 const PLAZOS = ['Flexible', 'Lo antes posible', 'En 1 – 2 meses', 'En 3+ meses'];
 
@@ -29,10 +22,18 @@ const EMPTY = {
   nombre: '',
   email: '',
   tipo: TIPOS[0],
-  presupuesto: PRESUPUESTOS[0],
+  moneda: 'USD',
+  monto: '',
+  presupuestoADefinir: true,
   plazo: PLAZOS[0],
   descripcion: '',
 };
+
+// Presupuesto: "A definir juntos" o un monto libre con su moneda.
+function formatearPresupuesto(d) {
+  if (d.presupuestoADefinir || !d.monto) return 'A definir juntos';
+  return `${Number(d.monto).toLocaleString('es-CO')} ${d.moneda}`;
+}
 
 // Arma el mismo mensaje estructurado tanto para WhatsApp como para el correo.
 function componerMensaje(d) {
@@ -42,11 +43,13 @@ function componerMensaje(d) {
     `Nombre: ${d.nombre}`,
     d.email ? `Email: ${d.email}` : null,
     `Tipo de proyecto: ${d.tipo}`,
-    `Presupuesto: ${d.presupuesto}`,
+    `Presupuesto: ${formatearPresupuesto(d)}`,
     `Plazo: ${d.plazo}`,
     '',
     'Descripción:',
     d.descripcion,
+    '',
+    '📎 Puedo adjuntar archivos (brief, referencias, wireframes) directamente en este chat/correo.',
   ]
     .filter((l) => l !== null)
     .join('\n');
@@ -138,23 +141,46 @@ function Cotizacion() {
                 </select>
               </label>
               <label className="cotizacion__field">
-                <span className="cotizacion__label-txt">Presupuesto</span>
-                <select value={datos.presupuesto} onChange={set('presupuesto')}>
-                  {PRESUPUESTOS.map((p) => (
+                <span className="cotizacion__label-txt">Plazo</span>
+                <select value={datos.plazo} onChange={set('plazo')}>
+                  {PLAZOS.map((p) => (
                     <option key={p}>{p}</option>
                   ))}
                 </select>
               </label>
             </div>
 
-            <label className="cotizacion__field">
-              <span className="cotizacion__label-txt">Plazo</span>
-              <select value={datos.plazo} onChange={set('plazo')}>
-                {PLAZOS.map((p) => (
-                  <option key={p}>{p}</option>
-                ))}
-              </select>
-            </label>
+            <div className="cotizacion__field">
+              <span className="cotizacion__label-txt">Presupuesto</span>
+              <label className="cotizacion__check">
+                <input
+                  type="checkbox"
+                  checked={datos.presupuestoADefinir}
+                  onChange={(e) =>
+                    setDatos((d) => ({ ...d, presupuestoADefinir: e.target.checked }))
+                  }
+                />
+                <span>A definir juntos</span>
+              </label>
+              {!datos.presupuestoADefinir && (
+                <div className="cotizacion__budget-inputs">
+                  <select value={datos.moneda} onChange={set('moneda')} aria-label="Moneda">
+                    {MONEDAS.map((m) => (
+                      <option key={m}>{m}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    inputMode="numeric"
+                    value={datos.monto}
+                    onChange={set('monto')}
+                    placeholder="Monto aproximado"
+                  />
+                </div>
+              )}
+            </div>
 
             <label className="cotizacion__field">
               <span className="cotizacion__label-txt">Cuéntame del proyecto *</span>
