@@ -8,6 +8,7 @@
 
 :root {
   --color-bg: #0f0800;
+  --color-bg-2: #160b01;
   --color-surface: #1a0c00;
   --color-surface-2: #231400;
   --color-text: #ffedd5;
@@ -42,11 +43,65 @@ main {
   padding-top: 64px;
 }
 
+/* ── Fondos de sección (full-bleed) ──────────────────────────────────────
+   Dan ritmo al scroll variando el tono y la "forma" del fondo entre
+   secciones, siempre dentro de la familia ámbar/oscuro. Cada banda es
+   opaca, así que cubre la rejilla global del body; el Hero conserva esa
+   rejilla como firma. Se asigna una textura por sección en Home.jsx. */
+.band {
+  background-color: var(--color-bg);
+}
+
+.band--tint {
+  background-color: var(--color-bg-2);
+}
+
+/* Puntos */
+.band--dots {
+  background-image: radial-gradient(rgba(251, 191, 36, 0.06) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+/* Diagonales tenues */
+.band--diagonal {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0 24px,
+    rgba(251, 191, 36, 0.03) 24px 25px
+  );
+}
+
+/* Rejilla amplia (más suelta que la del body) */
+.band--grid {
+  background-image:
+    linear-gradient(rgba(251, 191, 36, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 191, 36, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Glow ambiental (luz del terminal) */
+.band--glow {
+  background-image: radial-gradient(
+    ellipse 60% 55% at 50% 45%,
+    rgba(251, 191, 36, 0.06),
+    transparent 70%
+  );
+}
+
+.band--glow-top {
+  background-image: radial-gradient(
+    ellipse 75% 60% at 50% 0%,
+    rgba(251, 191, 36, 0.07),
+    transparent 65%
+  );
+}
+
 /* Scroll reveal */
 [data-reveal] {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-reveal='left'] {
@@ -55,6 +110,12 @@ main {
 
 [data-reveal='right'] {
   transform: translateX(28px);
+}
+
+/* Variante solo-fade: el movimiento lo hacen los hijos (ver [data-stagger]),
+   así el bloque no se desplaza dos veces. */
+[data-reveal='fade'] {
+  transform: none;
 }
 
 [data-reveal].revealed {
@@ -67,6 +128,29 @@ main {
 [data-reveal][data-delay='300'] { transition-delay: 0.3s; }
 [data-reveal][data-delay='400'] { transition-delay: 0.4s; }
 
+/* Stagger: los hijos directos de [data-stagger] entran en cascada cuando su
+   ancestro [data-reveal] recibe .revealed (grids de tarjetas). */
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.revealed [data-stagger] > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-stagger] > *:nth-child(1) { transition-delay: 0.04s; }
+[data-stagger] > *:nth-child(2) { transition-delay: 0.10s; }
+[data-stagger] > *:nth-child(3) { transition-delay: 0.16s; }
+[data-stagger] > *:nth-child(4) { transition-delay: 0.22s; }
+[data-stagger] > *:nth-child(5) { transition-delay: 0.28s; }
+[data-stagger] > *:nth-child(6) { transition-delay: 0.34s; }
+[data-stagger] > *:nth-child(7) { transition-delay: 0.40s; }
+[data-stagger] > *:nth-child(8) { transition-delay: 0.46s; }
+
 :focus-visible {
   outline: 2px solid #fbbf24;
   outline-offset: 2px;
@@ -76,7 +160,9 @@ main {
 @media (prefers-reduced-motion: reduce) {
   [data-reveal],
   [data-reveal='left'],
-  [data-reveal='right'] {
+  [data-reveal='right'],
+  [data-reveal='fade'],
+  [data-stagger] > * {
     opacity: 1;
     transform: none;
     transition: none;

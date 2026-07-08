@@ -45,7 +45,7 @@ src/
 ├── App.jsx                        ← define <Routes> (Layout → Home / ProyectoDetalle / 404)
 ├── main.jsx                       ← monta <BrowserRouter>
 ├── App.css                        ← utilidades de sección (.section, .section__label)
-├── index.css                      ← variables CSS, reset, grid body, scroll-reveal classes
+├── index.css                      ← variables CSS (incl. --color-bg-2), reset, scroll-reveal + stagger + bandas de fondo (.band--*)
 ├── pages/
 │   ├── Home.jsx                   ← compone las secciones del home + useScrollReveal
 │   ├── ProyectoDetalle.jsx (.css) ← caso de estudio por proyecto (/proyectos/:slug)
@@ -79,6 +79,7 @@ src/
 │   ├── Stack/                     ← 4 columnas por categoría con íconos SVG inline
 │   ├── SobreMi/                   ← bio + koliscode.json + stats (3+ años, 5+ proyectos)
 │   ├── NotasPreview/              ← teaser "Del blog": 2 notas recientes + "Ver todas →" a /notas
+│   ├── Cotizacion/                ← form de cotización; compone mensaje y abre WhatsApp (fallback mailto). Sin backend.
 │   └── Contacto/                  ← LinkedIn, GitHub, Email, WhatsApp
 └── data/
     ├── proyectos.js               ← fuente de verdad: imports de imágenes + metadata + caso de estudio
@@ -115,7 +116,19 @@ TiendaKit, multi-tenant/DentalSaaS).
 | `#stack` | Stack | ✅ 14 tecnologías con íconos SVG |
 | `#sobre-mi` | SobreMi | ✅ Bio + JSON panel + stats |
 | `#notas-preview` | NotasPreview | ✅ Teaser "Del blog": 2 notas recientes + enlace a `/notas` |
+| `#cotizacion` | Cotizacion | ✅ Formulario de solicitud de cotización → prefill WhatsApp (+ fallback mailto) |
 | `#contacto` | Contacto | ✅ LinkedIn, GitHub, Email, WhatsApp |
+
+### Cotización (`#cotizacion`)
+
+Sección de captación de leads (entre NotasPreview y Contacto en el home). Es un `<form>`
+con estética terminal (`nueva-solicitud.txt`): campos nombre*, email, tipo de proyecto,
+presupuesto, plazo y descripción*. **No hay backend** (el portafolio es estático en nginx):
+al enviar, `componerMensaje()` arma un texto estructurado y el botón primario abre
+`https://wa.me/573208146176?text=…` (WhatsApp prellenado); el botón fantasma "Enviar por
+correo" hace lo mismo vía `mailto:jhohantma@gmail.com`, reusando la validación nativa del
+form (`reportValidity()`). Cero dependencias de terceros. Para cambiar el destino: constantes
+`WHATSAPP`/`EMAIL` en `sections/Cotizacion/Cotizacion.jsx`.
 
 Cada `/proyectos/:slug` es una página de caso de estudio (`pages/ProyectoDetalle.jsx`):
 encabezado + galería/placeholder + meta sticky (rol/periodo/estado) + problema · solución ·
@@ -177,30 +190,93 @@ npm run preview   # sirve dist/ localmente
 # 1. Build
 npm run build
 
-# 2. Deploy via MCP droplet
+# 2. Deploy via MCP droplet (desde esta Ubuntu WSL; el path del Mac sería otro)
 mcp__droplet__deploy_static({
-  local_path: '/Users/Jhohan/Documents/portafolio/dist/',
+  local_path: '/home/jhohan/projects/portafolio/dist/',
   remote_path: '/var/www/portafolio'
 })
 ```
 
-Nginx config en droplet: `/etc/nginx/sites-enabled/portafolio`
-Dominio: `koliscode.com` con SSL Certbot.
+Flujo completo (rama-por-máquina): `git push origin developer-ubuntu` → PR a `master`
+(el merge lo hace el usuario; el clasificador bloquea auto-aprobar tu propio PR) →
+`npm run build` → `deploy_static`. El deploy sirve el `dist/`, no depende del merge.
+
+Nginx config en droplet: `/etc/nginx/sites-enabled/portafolio` (con fallback SPA
+`try_files $uri $uri/ /index.html`). Dominio: `koliscode.com` con SSL Certbot.
+
+> ⚠️ **Cuidado con el fallback SPA y los archivos ausentes:** cualquier ruta que no exista
+> como archivo devuelve `index.html` (HTML, 200). Por eso los íconos raster (`favicon.ico`,
+> `apple-touch-icon.png`) **deben existir** en `public/` — si faltan, el navegador/buscador
+> pide `/favicon.ico`, recibe HTML y no muestra ícono. Ver "Favicon / íconos" abajo.
+
+## Favicon / íconos
+
+En `public/`: `favicon.svg` (fuente, pixel-art del logo), `favicon.ico` (16/32/48, PNG
+embebido, ~1 KB), `favicon-16/32/48.png`, `apple-touch-icon.png` (180×180). Declarados en
+`index.html` (`.ico` con `sizes="any"` + SVG + PNG 32 + apple-touch). Regenerar desde el SVG:
+rasterizar con chromium headless por CDP (fondo transparente) y ensamblar el `.ico` con un
+script node que embebe los PNG (no usar `png-to-ico`: mete una entrada 256px y sube a ~285 KB).
+Verificar tras deploy que `curl -sI …/favicon.ico` responda `image/x-icon`, **no** `text/html`.
 
 ## Pendientes
 
 - **Revamp en curso (jul-2026):** Fase 1 hecha (router + páginas de caso de estudio + 3
   proyectos nuevos). Secciones **Servicios** ✅, **Blog/Notas** ✅ y **teaser de notas** ✅.
   **Transiciones de página** ✅ (fade en `route-fade`, `components/Layout/Layout.css`).
-  **Capturas GeoAgent** ✅ (3) y **DentalSaaS** ✅ (3, del frontend Angular local). Orden home:
-  Hero → Servicios → Proyectos → Stack → SobreMi → NotasPreview → Contacto. Pendiente: capturas de
-  Metriboard (bloqueadas: su frontend es un esqueleto sin datos) y migrar a TS.
+  **Capturas GeoAgent** ✅ (3) y **DentalSaaS** ✅ (3, del frontend Angular local). Pendiente:
+  capturas de Metriboard (bloqueadas: su frontend es un esqueleto sin datos) y migrar a TS.
+  **Orden home:** Hero → Servicios → Proyectos → Stack → SobreMi → NotasPreview →
+  **Cotizacion** → Contacto.
+- ✅ **Producción al día (2026-07-05):** desplegado desde esta Ubuntu con todo lo de la sesión
+  (cotización, copy, animaciones, fondos, favicon) + el fix de `lotesrb-4`. Hash del bundle en
+  vivo verificado = build local. **PR #4 (`developer-ubuntu` → `master`) queda abierto para que
+  el usuario lo mergee** (el clasificador impide auto-aprobar el propio PR); producción no lo
+  necesita.
 - Otro proyecto candidato: Nordik — pendiente decisión + capturas (sin deploy público:
   levantar local o placeholder de marca)
 - Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
 - Migrar a TypeScript
 - Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
 - KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado
+
+### Hecho 2026-07-05 (sesión larga — todo desplegado a koliscode.com)
+- **Sección de cotización (`#cotizacion`)** entre NotasPreview y Contacto. Form terminal →
+  prefill WhatsApp (`wa.me/573208146176`, confirmado por el usuario) + fallback `mailto`
+  (`JhohanBustamante@koliscode.com`), sin backend. Presupuesto: casilla "A definir juntos" (por
+  defecto) o monto libre con moneda (USD/COP/EUR). Adjuntos: por la vía nativa del chat/correo
+  (wa.me y mailto no transportan archivos; se descartó Web3Forms/backend por seguridad). Link
+  "cotización" en Navbar. Ver sección "Cotización" arriba.
+- **Copy humanizado (anti-IA):** se bajó la densidad de antítesis pulidas repetidas ("X, no Y"),
+  guiones largos como muletilla, cierres grandilocuentes y tríadas, en Hero, SobreMi, Servicios,
+  `proyectos.js`, las 3 notas y la meta description. Sin tocar el contenido técnico.
+- **Animaciones:** reveal con easing refinado (`cubic-bezier(0.22,1,0.36,1)`) + variante
+  `[data-reveal="fade"]` y **stagger** (`[data-stagger]` en los grids → tarjetas en cascada);
+  entrada escalonada del hero (`heroIn`); glow ámbar en hover de tarjetas; slide-down de los
+  campos de presupuesto. Todo respeta `prefers-reduced-motion`.
+- **Ritmo de fondos (bandas):** cada sección del home lleva una banda full-bleed opaca con tono
+  alterno (`--color-bg` / nuevo `--color-bg-2 #160b01`) y una "forma" distinta: `.band--dots`,
+  `.band--diagonal`, `.band--grid`, `.band--glow`, `.band--glow-top` (todas en `index.css`,
+  asignadas en `Home.jsx`). El Hero conserva la rejilla fina del body como firma. Solo CSS.
+- **Favicon / íconos:** el sitio solo tenía SVG → `/favicon.ico` y `/apple-touch-icon.png`
+  caían al fallback SPA (HTML) y no se veía ícono en buscadores/pestañas. Se generaron desde el
+  logo `favicon.ico` (16/32/48, PNG embebido, ~1 KB), `apple-touch-icon.png` (180) y
+  `favicon-32.png`, en `public/`, declarados en `index.html`. Generación: PNGs con chromium
+  headless (CDP, fondo transparente) + ensamblado del `.ico` con un script node (ICO admite PNG
+  por entrada — evita el 256px que infla `png-to-ico` a ~285 KB). Google recrawlea el favicon
+  en días/semanas; no se puede forzar.
+- Deploy: `push developer-ubuntu` + PR #4 a master (sin mergear, lo hace el usuario) +
+  `deploy_static` desde `/home/jhohan/projects/portafolio/dist/`. Verificado en vivo
+  (content-types de íconos = imagen, hash del bundle = local, `lotesrb-4` recapturado).
+
+### Hecho 2026-07-04
+- **LotesRB `lotesrb-4` recapturada.** La captura anterior mostraba la página "El Proyecto"
+  con literales sin rellenar (`[Nombre del Proyecto]`, `[X] min · [X] km`). Se arreglaron en la
+  app real (`Robinson/lotes-rb`, commit en su `developer-ubuntu`) y se recapturó con Playwright.
+  Encuadre 1100×593 (mismo aspecto que `lotesrb-1..3`, para que el carrusel no salte). Las otras
+  3 de LotesRB ya estaban bien pobladas → se dejaron. Las de Biodont también quedaron intactas.
+- Nota de tooling (capturas en esta Ubuntu WSL): el chromium headless no trae emoji a color →
+  hubo que instalar `NotoColorEmoji.ttf` en `~/.local/share/fonts`; conversión a WebP con `sharp`
+  (no hay `cwebp`/`convert` en el sistema). Ver memoria `playwright-captures-ubuntu`.
 
 ### Hecho 2026-07-02 (sesión orquestada)
 - SEO: og/twitter image absolutas + og:url + canonical + theme-color + JSON-LD Person;

@@ -13,7 +13,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.25s ease;
 }
 
 .proyecto__card::before,
@@ -46,6 +46,7 @@
 .proyecto__card:hover {
   border-color: rgba(251, 191, 36, 0.3);
   transform: translateY(-3px);
+  box-shadow: 0 10px 34px -12px rgba(251, 191, 36, 0.28);
 }
 
 .proyecto__card:hover::before,

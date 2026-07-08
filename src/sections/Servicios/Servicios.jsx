@@ -4,7 +4,7 @@ import './Servicios.css';
 const servicios = [
   {
     titulo: 'Aplicaciones web a medida',
-    descripcion: 'Webs y portales full-stack, del diseño de la base de datos a la interfaz. Rápidos, responsivos y listos para producción.',
+    descripcion: 'Webs y portales full-stack, del diseño de la base de datos a la interfaz. Rápidos, que se ven bien en el móvil y listos para salir a producción.',
     ejemplo: { nombre: 'LotesRB', slug: 'lotesrb' },
     icon: IconLayout,
   },
@@ -28,13 +28,13 @@ const servicios = [
   },
   {
     titulo: 'Integración de IA',
-    descripcion: 'Agentes y copilotos que trabajan sobre tus datos con herramientas (MCP), no con respuestas genéricas. IA con resultados verificables.',
+    descripcion: 'Agentes y copilotos que trabajan sobre tus datos reales usando herramientas (MCP), con respuestas que puedes rastrear hasta el dato que las respalda.',
     ejemplo: { nombre: 'GeoAgent', slug: 'geoagent' },
     icon: IconSpark,
   },
   {
     titulo: 'Dashboards y datos',
-    descripcion: 'Tableros de métricas e indicadores para decidir con datos: la información agregada en el backend y presentada de forma clara.',
+    descripcion: 'Tableros de métricas e indicadores para ver cómo va el negocio. Los datos se agregan en el backend y se presentan de forma clara.',
     ejemplo: { nombre: 'Metriboard', slug: 'metriboard' },
     icon: IconChart,
   },
@@ -46,7 +46,7 @@ function Servicios() {
       <p className="section__label">servicios</p>
       <h2 className="section__title">Lo que puedo construir para ti</h2>
 
-      <div className="servicios__grid">
+      <div className="servicios__grid" data-stagger>
         {servicios.map(({ titulo, descripcion, ejemplo, icon: Icon }) => (
           <article key={titulo} className="servicio__card">
             <span className="servicio__icon"><Icon /></span>

@@ -1,0 +1,274 @@
+.cotizacion__layout {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.cotizacion__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 6rem;
+}
+
+.cotizacion__texto p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 440px;
+}
+
+.cotizacion__prompt {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cotizacion__symbol {
+  color: var(--color-accent);
+}
+
+.cotizacion__nota {
+  font-size: 0.9rem !important;
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* Form card — estética terminal */
+.cotizacion__form {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.cotizacion__form-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cotizacion__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+}
+
+.cotizacion__dot:first-child {
+  background-color: var(--color-accent-2);
+}
+
+.cotizacion__form-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-left: 0.5rem;
+}
+
+.cotizacion__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.75rem;
+}
+
+.cotizacion__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.cotizacion__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cotizacion__label-txt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.cotizacion__field input,
+.cotizacion__field select,
+.cotizacion__field textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.cotizacion__field textarea {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.6;
+}
+
+.cotizacion__field select {
+  cursor: pointer;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--color-text-muted) 50%),
+    linear-gradient(135deg, var(--color-text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2rem;
+}
+
+.cotizacion__field input::placeholder,
+.cotizacion__field textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.cotizacion__field input:focus,
+.cotizacion__field select:focus,
+.cotizacion__field textarea:focus {
+  outline: none;
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+/* Options legibles en el desplegable nativo */
+.cotizacion__field select option {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* Presupuesto: toggle "A definir" + moneda/monto */
+.cotizacion__check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.cotizacion__check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.cotizacion__budget-inputs {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0.75rem;
+  margin-top: 0.65rem;
+  max-height: 120px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.28s ease,
+              margin-top 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cotizacion__budget-inputs--hidden {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cotizacion__budget-inputs {
+    transition: none;
+  }
+}
+
+.cotizacion__actions {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.cotizacion__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.2s, border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.cotizacion__btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cotizacion__btn--primary {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  flex: 1;
+  min-width: 220px;
+}
+
+.cotizacion__btn--primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
+
+.cotizacion__btn--ghost {
+  background-color: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.cotizacion__btn--ghost:hover {
+  border-color: rgba(251, 191, 36, 0.4);
+  color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .cotizacion__layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .cotizacion__texto {
+    position: static;
+  }
+
+  .cotizacion__row {
+    grid-template-columns: 1fr;
+  }
+
+  .cotizacion__fields {
+    padding: 1.25rem;
+  }
+
+  .cotizacion__btn--primary {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .cotizacion__btn--ghost {
+    width: 100%;
+  }
+}
