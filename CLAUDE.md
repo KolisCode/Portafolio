@@ -24,7 +24,9 @@ Live en: **https://koliscode.com**
 > `main.jsx` monta `<BrowserRouter>`; `App.jsx` define las `<Routes>` bajo un `Layout`
 > (Navbar + `<Outlet>` + Footer). El home vive en `pages/Home.jsx` (compone las secciones);
 > cada proyecto tiene su **página de caso de estudio** en `pages/ProyectoDetalle.jsx`.
-> ⚠️ Al desplegar en nginx hace falta fallback SPA: `try_files $uri $uri/ /index.html;`
+> El fallback SPA **ya existe en el droplet** (verificado en vivo 2026-07-09; server block
+> real en la sección Deploy). Limitación conocida: rutas inexistentes devuelven HTTP 200
+> con el `NotFound` montado (soft 404, inherente al fallback).
 
 ## Paleta de marca (KolisCode)
 
@@ -87,7 +89,9 @@ src/
 
 ## Blog / Notas (`/notas`)
 
-Posts en `src/content/notas/*.md`. **Publicar una nota = crear un `.md`** con frontmatter:
+Posts en `src/content/notas/*.md`. **Publicar una nota = crear el `.md` + añadir su URL
+(y `lastmod`) a `public/sitemap.xml`** — el sitemap es manual, no se genera en build.
+Frontmatter:
 
 ```markdown
 ---
@@ -149,6 +153,7 @@ todavía aunque su API+seed sí funcionen.
 Para agregar un proyecto nuevo:
 1. (Opcional) capturas en `src/assets/proyectos/nombre-{1-4}.webp` + imports en `proyectos.js`
 2. Agregar objeto al array con `slug` único y su `caso`
+3. Añadir `https://koliscode.com/proyectos/<slug>` a `public/sitemap.xml` (es manual)
 
 ## Componentes clave
 
@@ -173,19 +178,36 @@ npm run preview   # sirve dist/ localmente
 
 ## Deploy
 
-```bash
-# 1. Build
-npm run build
+**Flujo canónico: `./deploy.sh`** — exige rama `master` y working tree limpio; hace
+push → build → rsync de `dist/` al droplet → `nginx -t` + reload → healthcheck HTTPS.
+⚠️ Tras un `git pull`, correr `npm ci` antes: el revamp añadió `react-router-dom` y
+`marked`, y con `node_modules` viejo el build muere (pasó en el Mac, 2026-07-09).
 
-# 2. Deploy via MCP droplet
+Alternativa manual (sin guardas de rama/working tree — usar solo si deploy.sh no aplica):
+
+```bash
+npm run build
 mcp__droplet__deploy_static({
   local_path: '/Users/Jhohan/Documents/portafolio/dist/',
   remote_path: '/var/www/portafolio'
 })
 ```
 
-Nginx config en droplet: `/etc/nginx/sites-enabled/portafolio`
-Dominio: `koliscode.com` con SSL Certbot.
+Nginx en el droplet: `/etc/nginx/sites-enabled/koliscode.com` (no "portafolio").
+Server block real (verificado 2026-07-09) — el fallback SPA ya está:
+
+```nginx
+server_name koliscode.com www.koliscode.com;
+root /var/www/portafolio;
+index index.html;
+location / {
+    try_files $uri $uri/ /index.html;
+}
+listen 443 ssl; # managed by Certbot
+```
+
+Verificación post-deploy: además de `/`, curl a una **ruta profunda** (`/notas` → 200
+text/html) — un curl a `/` solo no detecta la pérdida del `try_files`.
 
 ## Pendientes
 
@@ -199,6 +221,21 @@ Dominio: `koliscode.com` con SSL Certbot.
   levantar local o placeholder de marca)
 - Analytics: decidir umami/Plausible self-host vs GoatCounter vs posponer (solo falta el tag)
 - Migrar a TypeScript
+- **Barrido 2026-07-10 (pendientes técnicos, orden de impacto):**
+  - **SEO por-ruta (ALTA):** no hay `document.title` dinámico y el `canonical`/`og:url`
+    apuntan fijos al home — las 12 URLs internas del sitemap declaran `/` como canónica.
+    Mínimo: hook `usePageMeta(titulo, descripcion)` por ruta; ideal: prerender de las 13
+    rutas en build (SSG ligero, son estáticas y finitas)
+  - **A11y Carrusel/Lightbox:** abrir el lightbox es un `<div>` con onClick sin
+    role/tabIndex/teclado; el dialog no mueve el foco ni atrapa Tab
+  - **Code-splitting:** bundle único 352 kB (113 kB gzip) — `React.lazy` para
+    Notas/NotaDetalle/ProyectoDetalle y parsear el MD bajo demanda en `getNota`
+  - **Scroll animado entre rutas:** `scroll-behavior: smooth` global + `scrollTo(0,0)`
+    del Layout → usar `behavior: 'instant'` en cambios de ruta sin hash
+  - **Generar sitemap en build** desde `proyectos.js` + `content/notas/` (hoy es manual)
+  - Menores: `<h1>` en `/notas` (hoy arranca en h2), `noindex` en NotFound montado,
+    stack de Metriboard en `proyectos.js` dice React (real: Next.js 16), verificar que
+    `KolisCode/lotesRB` sea público (el caso de estudio afirma "código abierto")
 - Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
 - KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado
 
