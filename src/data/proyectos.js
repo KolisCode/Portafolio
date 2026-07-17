@@ -246,7 +246,7 @@ export const proyectos = [
         nombre: 'Metriboard',
         tagline: 'Dashboard de métricas sobre una API NestJS.',
         descripcion: 'Panel de métricas: agrega datos de negocio y los expone como indicadores y visualizaciones a través de una API NestJS con Prisma.',
-        stack: ['NestJS', 'Prisma', 'PostgreSQL', 'React'],
+        stack: ['NestJS', 'Prisma', 'PostgreSQL', 'Next.js'],
         estado: 'En desarrollo',
         imagenes: [],
         github: 'https://github.com/KolisCode/metriboard',

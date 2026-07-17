@@ -233,9 +233,9 @@ text/html) — un curl a `/` solo no detecta la pérdida del `try_files`.
   - **Scroll animado entre rutas:** `scroll-behavior: smooth` global + `scrollTo(0,0)`
     del Layout → usar `behavior: 'instant'` en cambios de ruta sin hash
   - **Generar sitemap en build** desde `proyectos.js` + `content/notas/` (hoy es manual)
-  - Menores: `<h1>` en `/notas` (hoy arranca en h2), `noindex` en NotFound montado,
-    stack de Metriboard en `proyectos.js` dice React (real: Next.js 16), verificar que
-    `KolisCode/lotesRB` sea público (el caso de estudio afirma "código abierto")
+  - Menores: `<h1>` en `/notas` (hoy arranca en h2), `noindex` en NotFound montado
+    (resueltos 2026-07-16: stack de Metriboard corregido a Next.js en `proyectos.js`;
+    `KolisCode/lotesRB` verificado público — el claim "código abierto" es válido)
 - Biodont va sin link de demo a propósito (sistema clínico real en el droplet)
 - KolisKit va sin link de GitHub: el repo `KolisCode/api` es privado
 
